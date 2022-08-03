@@ -1,0 +1,17 @@
+{
+  "db": {
+    "name": "online_ticketing",
+    "host": "localhost",
+    "port": 3306,
+    "database": "online_ticketing",
+    "username": "jasiedu",
+    "password": "kw7679as"
+  }
+}
+
+
+
+
+
+
+
