@@ -4,8 +4,8 @@
     "host": "localhost",
     "port": 3306,
     "database": "online_ticketing",
-    "username": "jasiedu",
-    "password": "kw7679as"
+    "username": "vip",
+    "password": "csit410_vip"
   }
 }
 
