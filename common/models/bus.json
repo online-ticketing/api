@@ -1,38 +1,32 @@
 {
-  "name": "AppUser",
+  "name": "bus",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true
-  },
-  "options": {
     "mysql": {
-      "table": "user"
+      "table": "bus"
     }
   },
   "properties": {
-    "full_name": {
+    "bus_number": {
       "type": "string",
       "required": true
     },
-    "contact_number": {
+    "gps_location": {
+      "type": "GeoPoint",
+      "required": true
+    },
+    "plate_number": {
       "type": "string",
       "required": true
     },
-    "email": {
-      "type": "string"
-    },
-    "username": {
-      "type": "string"
-    },
-    "password": {
-      "type": "buffer",
-      "required": true
-    },
-    "account_status": {
+    "capacity": {
       "type": "number",
-      "required": true,
-      "default": 1
+      "required": true
+    },
+    "status": {
+      "type": "number",
+      "required": true
     },
     "date_created": {
       "type": "date",
@@ -66,7 +60,14 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "created_by_id": {
+      "type": "hasOne",
+      "model": "user",
+      "foreignKey": "id",
+      "primaryKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

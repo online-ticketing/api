@@ -1,0 +1,68 @@
+{
+  "name": "role",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "mysql": {
+      "table": "role"
+    }
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "date_created": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "date_created",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "last_modified": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "last_modified",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "users": {
+      "type": "hasAndBelongsToMany",
+      "model": "user",
+      "foreignKey": "",
+      "through": "user_role"
+    },
+    "created_by_id": {
+      "type": "hasOne",
+      "model": "user",
+      "foreignKey": "id",
+      "primaryKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
