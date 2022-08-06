@@ -36,7 +36,11 @@
     "dataSource": "db",
     "public": false
   },
-  "AppUser": {
+  "user": {
+    "dataSource": "online_ticketing",
+    "public": true
+  },
+  "role": {
     "dataSource": "online_ticketing",
     "public": true
   }

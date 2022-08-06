@@ -1,5 +1,5 @@
 {
-  "name": "AppUser",
+  "name": "role",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -7,32 +7,17 @@
   },
   "options": {
     "mysql": {
-      "table": "user"
+      "table": "role"
     }
   },
   "properties": {
-    "full_name": {
+    "name": {
       "type": "string",
       "required": true
     },
-    "contact_number": {
+    "description": {
       "type": "string",
       "required": true
-    },
-    "email": {
-      "type": "string"
-    },
-    "username": {
-      "type": "string"
-    },
-    "password": {
-      "type": "buffer",
-      "required": true
-    },
-    "account_status": {
-      "type": "number",
-      "required": true,
-      "default": 1
     },
     "date_created": {
       "type": "date",
