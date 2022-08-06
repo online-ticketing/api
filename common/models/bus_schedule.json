@@ -1,0 +1,119 @@
+{
+  "name": "bus_schedule",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "mysql": {
+      "table": "bus_schedule"
+    }
+  },
+  "properties": {
+    "note": {
+      "type": "string"
+    },
+    "schedule_date": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "schedule_date",
+        "dataType": "date",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "departure_time": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "departure_time",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "estimated_arrival_time": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "estimated_arrival_time",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "date_created": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "date_created",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "last_modified": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "last_modified",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "created_by_id": {
+      "type": "hasOne",
+      "model": "user",
+      "foreignKey": "id",
+      "primaryKey": ""
+    },
+    "bus": {
+      "type": "hasOne",
+      "model": "bus",
+      "foreignKey": "id",
+      "primaryKey": ""
+    },
+    "driver": {
+      "type": "hasOne",
+      "model": "user",
+      "foreignKey": "id",
+      "primaryKey": ""
+    },
+    "route": {
+      "type": "hasOne",
+      "model": "route",
+      "foreignKey": "id",
+      "primaryKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
