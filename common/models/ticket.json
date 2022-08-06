@@ -1,0 +1,61 @@
+{
+  "name": "ticket",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "mysql": {
+      "table": "ticket"
+    }
+  },
+  "properties": {
+    "serial_number": {
+      "type": "string",
+      "required": true
+    },
+    "seat_number": {
+      "type": "number",
+      "required": true
+    },
+    "date_created": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "date_created",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "last_modified": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "last_modified",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "booking": {
+      "type": "hasOne",
+      "model": "booking",
+      "foreignKey": "id",
+      "primaryKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

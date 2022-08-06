@@ -36,7 +36,39 @@
     "dataSource": "db",
     "public": false
   },
+  "booking": {
+    "dataSource": "online_ticketing",
+    "public": true
+  },
   "bus": {
+    "dataSource": "online_ticketing",
+    "public": true
+  },
+  "bus_schedule": {
+    "dataSource": "online_ticketing",
+    "public": true
+  },
+  "bus_stop": {
+    "dataSource": "online_ticketing",
+    "public": true
+  },
+  "payment": {
+    "dataSource": "online_ticketing",
+    "public": true
+  },
+  "role": {
+    "dataSource": "online_ticketing",
+    "public": true
+  },
+  "route": {
+    "dataSource": "online_ticketing",
+    "public": true
+  },
+  "route_bus_stop": {
+    "dataSource": "online_ticketing",
+    "public": false
+  },
+  "ticket": {
     "dataSource": "online_ticketing",
     "public": true
   },
@@ -47,9 +79,5 @@
   "user_role": {
     "dataSource": "online_ticketing",
     "public": false
-  },
-  "role": {
-    "dataSource": "online_ticketing",
-    "public": true
   }
 }

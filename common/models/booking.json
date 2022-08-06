@@ -1,0 +1,73 @@
+{
+  "name": "booking",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "mysql": {
+      "table": "booking"
+    }
+  },
+  "properties": {
+    "status": {
+      "type": "number",
+      "required": true
+    },
+    "number_of_seats": {
+      "type": "number",
+      "required": true
+    },
+    "date_created": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "date_created",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "last_modified": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "last_modified",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "user",
+      "foreignKey": "id",
+      "primaryKey": ""
+    },
+    "starting_bus_stop": {
+      "type": "hasOne",
+      "model": "bus_stop",
+      "foreignKey": "id",
+      "primaryKey": ""
+    },
+    "bus_schedule": {
+      "type": "hasOne",
+      "model": "bus_schedule",
+      "foreignKey": "id",
+      "primaryKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
