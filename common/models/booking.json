@@ -12,6 +12,18 @@
       "type": "number",
       "required": true
     },
+    "user_id": {
+      "type": "number",
+      "required": true
+    },
+    "bus_stop_id": {
+      "type": "number",
+      "required": true
+    },
+    "bus_schedule_id": {
+      "type": "number",
+      "required": true
+    },
     "number_of_seats": {
       "type": "number",
       "required": true
@@ -55,7 +67,7 @@
       "foreignKey": "id",
       "primaryKey": ""
     },
-    "starting_bus_stop": {
+    "bus_stop": {
       "type": "hasOne",
       "model": "bus_stop",
       "foreignKey": "id",
