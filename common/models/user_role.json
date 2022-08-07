@@ -1,0 +1,47 @@
+{
+  "name": "user_role",
+  "plural": "user_roles",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "mysql": {
+      "table": "user_role"
+    }
+  },
+  "idInjection": true,
+  "properties": {
+    "userId": {
+      "type": "number",
+      "doc": "USER ID",
+      "required": true,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "user_id",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "roleId": {
+      "type": "number",
+      "doc": "Role ID",
+      "required": true,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "role_id",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    }
+  },
+  "scope": {
+  },
+  "validations": [],
+  "acls": [],
+  "methods": {}
+}

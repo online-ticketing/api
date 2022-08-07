@@ -1,36 +1,38 @@
 {
-  "name": "user",
+  "name": "payment",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true,
     "mysql": {
-      "table": "user"
+      "table": "payment"
     }
   },
   "properties": {
-    "full_name": {
-      "type": "string",
-      "required": true
-    },
-    "contact_number": {
-      "type": "string",
-      "required": true
-    },
-    "email": {
+    "note": {
       "type": "string"
     },
-    "username": {
-      "type": "string"
-    },
-    "password": {
-      "type": "buffer",
-      "required": true
-    },
-    "account_status": {
+    "amount_paid": {
       "type": "number",
+      "required": true
+    },
+    "payment_method": {
+      "type": "string",
+      "required": true
+    },
+    "payment_date": {
+      "type": "date",
       "required": true,
-      "default": 1
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "payment_date",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
     },
     "date_created": {
       "type": "date",
@@ -65,11 +67,17 @@
   },
   "validations": [],
   "relations": {
-    "roles": {
-      "type": "hasMany",
-      "model": "role",
-      "foreignKey": "",
-      "through": "user_role"
+    "created_by_id": {
+      "type": "hasOne",
+      "model": "user",
+      "foreignKey": "id",
+      "primaryKey": ""
+    },
+    "booking": {
+      "type": "hasOne",
+      "model": "booking",
+      "foreignKey": "id",
+      "primaryKey": ""
     }
   },
   "acls": [],

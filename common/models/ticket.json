@@ -1,36 +1,20 @@
 {
-  "name": "user",
+  "name": "ticket",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true,
     "mysql": {
-      "table": "user"
+      "table": "ticket"
     }
   },
   "properties": {
-    "full_name": {
+    "serial_number": {
       "type": "string",
       "required": true
     },
-    "contact_number": {
-      "type": "string",
-      "required": true
-    },
-    "email": {
-      "type": "string"
-    },
-    "username": {
-      "type": "string"
-    },
-    "password": {
-      "type": "buffer",
-      "required": true
-    },
-    "account_status": {
+    "seat_number": {
       "type": "number",
-      "required": true,
-      "default": 1
+      "required": true
     },
     "date_created": {
       "type": "date",
@@ -65,11 +49,11 @@
   },
   "validations": [],
   "relations": {
-    "roles": {
-      "type": "hasMany",
-      "model": "role",
-      "foreignKey": "",
-      "through": "user_role"
+    "booking": {
+      "type": "hasOne",
+      "model": "booking",
+      "foreignKey": "id",
+      "primaryKey": ""
     }
   },
   "acls": [],

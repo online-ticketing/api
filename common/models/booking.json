@@ -1,36 +1,20 @@
 {
-  "name": "user",
+  "name": "booking",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true,
     "mysql": {
-      "table": "user"
+      "table": "booking"
     }
   },
   "properties": {
-    "full_name": {
-      "type": "string",
-      "required": true
-    },
-    "contact_number": {
-      "type": "string",
-      "required": true
-    },
-    "email": {
-      "type": "string"
-    },
-    "username": {
-      "type": "string"
-    },
-    "password": {
-      "type": "buffer",
-      "required": true
-    },
-    "account_status": {
+    "status": {
       "type": "number",
-      "required": true,
-      "default": 1
+      "required": true
+    },
+    "number_of_seats": {
+      "type": "number",
+      "required": true
     },
     "date_created": {
       "type": "date",
@@ -65,11 +49,23 @@
   },
   "validations": [],
   "relations": {
-    "roles": {
-      "type": "hasMany",
-      "model": "role",
-      "foreignKey": "",
-      "through": "user_role"
+    "user": {
+      "type": "hasOne",
+      "model": "user",
+      "foreignKey": "id",
+      "primaryKey": ""
+    },
+    "starting_bus_stop": {
+      "type": "hasOne",
+      "model": "bus_stop",
+      "foreignKey": "id",
+      "primaryKey": ""
+    },
+    "bus_schedule": {
+      "type": "hasOne",
+      "model": "bus_schedule",
+      "foreignKey": "id",
+      "primaryKey": ""
     }
   },
   "acls": [],

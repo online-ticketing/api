@@ -1,36 +1,20 @@
 {
-  "name": "user",
+  "name": "route",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true,
     "mysql": {
-      "table": "user"
+      "table": "route"
     }
   },
   "properties": {
-    "full_name": {
+    "name": {
       "type": "string",
       "required": true
     },
-    "contact_number": {
-      "type": "string",
-      "required": true
-    },
-    "email": {
-      "type": "string"
-    },
-    "username": {
-      "type": "string"
-    },
-    "password": {
-      "type": "buffer",
-      "required": true
-    },
-    "account_status": {
+    "fare": {
       "type": "number",
-      "required": true,
-      "default": 1
+      "required": true
     },
     "date_created": {
       "type": "date",
@@ -65,11 +49,17 @@
   },
   "validations": [],
   "relations": {
-    "roles": {
+    "created_by_id": {
+      "type": "hasOne",
+      "model": "user",
+      "foreignKey": "id",
+      "primaryKey": ""
+    },
+    "bus_stops": {
       "type": "hasMany",
-      "model": "role",
+      "model": "bus_stop",
       "foreignKey": "",
-      "through": "user_role"
+      "through": "route_bus_stop"
     }
   },
   "acls": [],
