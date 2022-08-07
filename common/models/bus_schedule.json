@@ -11,6 +11,22 @@
     "note": {
       "type": "string"
     },
+    "bus_id": {
+      "type": "number",
+      "required": true
+    },
+    "driver_id": {
+      "type": "number",
+      "required": true
+    },
+    "route_id": {
+      "type": "number",
+      "required": true
+    },
+    "created_by_id": {
+      "type": "number",
+      "required": true
+    },
     "schedule_date": {
       "type": "date",
       "required": false,
