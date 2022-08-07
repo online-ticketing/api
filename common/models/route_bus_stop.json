@@ -1,0 +1,91 @@
+{
+  "name": "route_bus_stop",
+  "plural": "route_bus_stops",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "mysql": {
+      "table": "route_bus_stop"
+    }
+  },
+  "idInjection": true,
+  "properties": {
+    "seq_order" : {
+      "type": "number",
+      "doc": "Sequential order of this route",
+      "required": true,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "seq_order",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "routeId": {
+      "type": "number",
+      "doc": "Route ID",
+      "required": true,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "route_id",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "busStopId": {
+      "type": "number",
+      "doc": "Bus stop ID",
+      "required": true,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "bus_stop_id",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "date_created": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "date_created",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "last_modified": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "last_modified",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    }
+  },
+  "scope": {
+  },
+  "validations": [],
+  "acls": [],
+  "methods": {}
+}
