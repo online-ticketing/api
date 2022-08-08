@@ -8,21 +8,45 @@
     }
   },
   "properties": {
+    "passengerId": {
+      "type": "number",
+      "required": true,
+      "description": "Link to users table",
+      "mysql": {
+        "columnName": "user_id",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
     "status": {
       "type": "number",
       "required": true
     },
-    "user_id": {
+    "bus_stopId": {
       "type": "number",
-      "required": true
+      "required": true,
+      "description": "Link to bus stops table",
+      "mysql": {
+        "columnName": "bus_stop_id",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
     },
-    "bus_stop_id": {
+    "bus_scheduleId": {
       "type": "number",
-      "required": true
-    },
-    "bus_schedule_id": {
-      "type": "number",
-      "required": true
+      "required": true,
+      "description": "Link to bus schedule table",
+      "mysql": {
+        "columnName": "bus_schedule_id",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
     },
     "number_of_seats": {
       "type": "number",
@@ -61,23 +85,35 @@
   },
   "validations": [],
   "relations": {
-    "user": {
-      "type": "hasOne",
+    "tickets": {
+      "type": "hasMany",
+      "model": "ticket",
+      "foreignKey": "",
+      "primaryKey": "id"
+    },
+    "passenger": {
+      "type": "belongsTo",
       "model": "user",
-      "foreignKey": "id",
-      "primaryKey": ""
+      "foreignKey": "",
+      "primaryKey": "id"
+    },
+    "payment": {
+      "type": "hasOne",
+      "model": "payment",
+      "foreignKey": "",
+      "primaryKey": "id"
     },
     "bus_stop": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "bus_stop",
-      "foreignKey": "id",
-      "primaryKey": ""
+      "foreignKey": "",
+      "primaryKey": "id"
     },
     "bus_schedule": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "bus_schedule",
-      "foreignKey": "id",
-      "primaryKey": ""
+      "foreignKey": "",
+      "primaryKey": "id"
     }
   },
   "acls": [],

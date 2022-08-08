@@ -65,6 +65,12 @@
   },
   "validations": [],
   "relations": {
+    "bookings": {
+      "type": "hasMany",
+      "model": "booking",
+      "foreignKey": "passengerId",
+      "primaryKey": "id"
+    },
     "roles": {
       "type": "hasMany",
       "model": "role",

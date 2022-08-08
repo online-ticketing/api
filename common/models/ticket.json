@@ -16,6 +16,18 @@
       "type": "number",
       "required": true
     },
+    "bookingId": {
+      "type": "number",
+      "required": true,
+      "description": "Link to booking table",
+      "mysql": {
+        "columnName": "booking_id",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
     "date_created": {
       "type": "date",
       "required": false,
@@ -50,10 +62,10 @@
   "validations": [],
   "relations": {
     "booking": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "booking",
-      "foreignKey": "id",
-      "primaryKey": ""
+      "foreignKey": "",
+      "primaryKey": "id"
     }
   },
   "acls": [],
