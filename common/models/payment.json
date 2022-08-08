@@ -8,6 +8,18 @@
     }
   },
   "properties": {
+    "bookingId": {
+      "type": "number",
+      "required": true,
+      "description": "Link to booking table",
+      "mysql": {
+        "columnName": "booking_id",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
     "note": {
       "type": "string"
     },
@@ -70,12 +82,6 @@
     "created_by_id": {
       "type": "hasOne",
       "model": "user",
-      "foreignKey": "id",
-      "primaryKey": ""
-    },
-    "booking": {
-      "type": "hasOne",
-      "model": "booking",
       "foreignKey": "id",
       "primaryKey": ""
     }
