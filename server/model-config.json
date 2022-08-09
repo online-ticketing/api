@@ -42,7 +42,6 @@
     "public": true
   },
   "booking": {
-
     "dataSource": "online_ticketing",
     "public": true
   },

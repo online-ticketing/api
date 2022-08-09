@@ -39,8 +39,7 @@
       }
     }
   },
-  "scope": {
-  },
+  "scope": {},
   "validations": [],
   "acls": [],
   "methods": {}
