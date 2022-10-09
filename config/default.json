@@ -1,7 +1,7 @@
 {
   "db": {
     "name": "online_ticketing",
-    "host": "localhost",
+    "host": "onlineticketing.c8smnxlye9xt.us-east-1.rds.amazonaws.com",
     "port": 3306,
     "database": "online_ticketing",
     "username": "vip",
