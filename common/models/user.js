@@ -50,10 +50,10 @@ module.exports = function(User) {
         if(!isMatch){
           throw new Error("phone/password did not match")
         }
+        return {phone : user.contact_number, full_name: user.full_name, api_key: user.api_key};
       }else{
         throw new Error("phone/password did not match")
       }
-      return "success";
     } catch (error) {
       console.log(error)
       throw error
