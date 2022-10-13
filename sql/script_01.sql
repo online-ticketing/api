@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `online_ticketing`.`user` (
   `contact_number` varchar(10) NOT NULL,
   `email` varchar(30) DEFAULT NULL,
   `username` varchar(20) NOT NULL,
-  `password` blob NOT NULL,
+  `password` varchar(100) NOT NULL,
   `api_key` VARCHAR(45) NOT NULL,
   `account_status` int NOT NULL DEFAULT '0',
   `date_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,

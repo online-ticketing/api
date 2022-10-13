@@ -27,7 +27,7 @@
       "index": {"unique": true}
     },
     "password": {
-      "type": "buffer",
+      "type": "string",
       "required": true
     },
     "account_status": {
