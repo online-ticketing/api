@@ -186,9 +186,9 @@ CREATE TABLE IF NOT EXISTS `online_ticketing`.`ticket` (
 
 
 INSERT INTO `online_ticketing`.`user` (`full_name`,`contact_number`,`email`,`username`,`password`,`account_status`,`api_key`)
-VALUES("Kwabena Asiedu","6174819043","jacob.asiedu@gmail.com","jasiedu",AES_ENCRYPT("123456","mabang-tepa"),1,'xxxxxxxxx1'),
-("Frank Boakye","0245666208","boakyef213@gmail.com","boakyef",AES_ENCRYPT("654321","mabang-tepa"),1,'xxxxxxxxx2'),
-("Adu Acheampong","0591984773","aacheampong@gmail.com","aacheampong",AES_ENCRYPT("1234654321","mabang-tepa"),1,'xxxxxxxxx3');
+VALUES("Kwabena Asiedu","6174819043","jacob.asiedu@gmail.com","jasiedu","$2a$10$ZldWMzJiLeoUlyyFOxiiPeVmROBYsY3V7f/NXw.rIywfZDbrlP8eS",1,'xxxxxxxxx1'),
+("Frank Boakye","0245666208","boakyef213@gmail.com","boakyef","$2a$10$ZldWMzJiLeoUlyyFOxiiPeVmROBYsY3V7f/NXw.rIywfZDbrlP8eS",1,'xxxxxxxxx2'),
+("Adu Acheampong","0591984773","aacheampong@gmail.com","aacheampong","$2a$10$ZldWMzJiLeoUlyyFOxiiPeVmROBYsY3V7f/NXw.rIywfZDbrlP8eS",1,'xxxxxxxxx3');
 
 INSERT INTO `online_ticketing`.`role` (`name`,`created_by_id`,`description`)
 VALUES("MANAGER",1,"The Manager Role"),("BOOK_MAN",1,"The Book man Role"),("DRIVER",1,"The Driver Role"),("ADMIN",1,"The System Administrative Role"),("CONDUCTOR",1,"The Conductor Role"),("PASSENGER",1,"The passenger Role");
