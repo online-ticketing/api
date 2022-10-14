@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 module.exports = function(User) {
   User.beforeRemote('**', async function(ctx) {
-    const methodName = ctx.method.name;
-    if (methodName.toLowerCase() === 'create') {
+    const methodName = ctx.method.name.toLowerCase();
+    if (methodName === 'create') {
       let pwd = ctx.req.body.password;
       if (pwd) {
         pwd = await bcrypt.hash(pwd, saltRounds)
@@ -13,25 +13,14 @@ module.exports = function(User) {
         const api_key = crypto.randomBytes(20).toString('hex');
         ctx.req.body.api_key = api_key;
       }
+      return;
     }
-    const list = ['patchorcreate', 'find', 'replaceorcreate', 'deleteById'];
-    const allow = ['create'];
-    const user_admin = [
-      'patchattributes',
-      'findbyid',
-      'exists',
-      '__delete__bookings',
-      'replacebyid',
-      '__get__bookings',
-      '__create__bookings',
-      '__findById__bookings',
-      '__updateById__bookings',
-      '__destroyById__bookings',
-      '__get__roles',
-      '__create__roles',
-    ];
-
-    return;
+    if (methodName === 'login') {
+      return;
+    }
+    //Only admins/managers should be able to access this resource
+    const utils = require("../utils/apiUtils");
+    return await utils.admin_authorization(ctx);
   });
   /**
    *
@@ -40,7 +29,6 @@ module.exports = function(User) {
    */
   User.login = async function (data) {
     try {
-      console.log(data);
       const phone = data.contact_number;
       const password = data.password;
       const users = await User.find({where: {contact_number: phone}});
