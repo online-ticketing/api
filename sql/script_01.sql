@@ -280,3 +280,15 @@ select distinct r.id as route_id, bs.id as bus_stop_id,bs.id
 from online_ticketing.route r cross join online_ticketing.bus_stop bs
 where r.name='KUMASI-ACCRA' and bs.ghana_post_address in ('GP10','GP11','GP12','GP13','GP14','GP15','GP16','GP17','GP18','GP19');
 
+
+CREATE OR REPLACE view online_ticketing.v_bus_route as
+SELECT
+UUID() as 'id',
+r.id as route_id,
+bs.departure_time, r.name as route,r.fare as fare,bst.name as bus_stop,
+rbs.seq_order as bus_stop_order
+FROM online_ticketing.bus_schedule bs
+left join online_ticketing.route r on r.id=bs.route_id
+left join online_ticketing.route_bus_stop rbs on rbs.route_id=r.id
+left join online_ticketing.bus_stop bst on rbs.bus_stop_id=bst.id
+order by departure_time,bus_stop_order

@@ -84,5 +84,9 @@
   "user_role": {
     "dataSource": "online_ticketing",
     "public": false
+  },
+  "v_bus_route": {
+    "dataSource": "online_ticketing",
+    "public": true
   }
 }

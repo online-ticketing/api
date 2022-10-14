@@ -1,6 +1,5 @@
 'use strict';
 
-const utils = require('../utils/apiUtils');
 module.exports = function(BusStop) {
   BusStop.beforeRemote('**', async function(ctx) {
     const utils = require('../utils/apiUtils');

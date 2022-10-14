@@ -1,0 +1,51 @@
+{
+  "name": "v_bus_route",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "mysql": {
+      "table": "v_bus_route"
+    }
+  },
+  "properties": {
+    "route_id": {
+      "type": "number",
+      "required": true
+    },
+    "route": {
+      "type": "string",
+      "required": true
+    },
+    "fare": {
+      "type": "float",
+      "required": true
+    },
+    "bus_stop": {
+      "type": "string",
+      "required": true
+    },
+    "bus_stop_order": {
+      "type": "number",
+      "required": true
+    },
+    "departure_time": {
+      "type": "date",
+      "required": true,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "departure_time",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
