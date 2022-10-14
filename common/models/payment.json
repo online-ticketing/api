@@ -75,15 +75,27 @@
         "dataScale": null,
         "nullable": "Y"
       }
+    },
+    "passengerId": {
+      "type": "number",
+      "required": true,
+      "description": "Link to users table",
+      "mysql": {
+        "columnName": "created_by_id",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
     }
   },
   "validations": [],
   "relations": {
-    "created_by_id": {
-      "type": "hasOne",
+    "passenger": {
+      "type": "belongsTo",
       "model": "user",
-      "foreignKey": "id",
-      "primaryKey": ""
+      "foreignKey": "",
+      "primaryKey": "id"
     }
   },
   "acls": [],

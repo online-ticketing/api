@@ -79,6 +79,12 @@
       "foreignKey": "passengerId",
       "primaryKey": "id"
     },
+    "payments": {
+      "type": "hasMany",
+      "model": "payment",
+      "foreignKey": "created_by_id",
+      "primaryKey": "id"
+    },
     "roles": {
       "type": "hasMany",
       "model": "role",

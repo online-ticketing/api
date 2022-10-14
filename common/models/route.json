@@ -12,6 +12,10 @@
       "type": "string",
       "required": true
     },
+    "created_by_id": {
+      "type": "number",
+      "required": true
+    },
     "fare": {
       "type": "number",
       "required": true
