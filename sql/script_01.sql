@@ -174,13 +174,16 @@ CREATE TABLE IF NOT EXISTS `online_ticketing`.`payment` (
 CREATE TABLE IF NOT EXISTS `online_ticketing`.`ticket` (
   `id` int NOT NULL AUTO_INCREMENT,
   `seat_number` int NOT NULL,
+   `user_id` int NOT NULL,
   `serial_number` varchar(30) NOT NULL,
   `booking_id` int NOT NULL,
   `date_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `last_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+   KEY `user_id` (`user_id`),
   UNIQUE KEY `serial_number_UNIQUE` (`serial_number`),
   KEY `booking_id` (`booking_id`),
+   CONSTRAINT `ticket_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`id`)
 );
 
