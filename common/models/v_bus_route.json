@@ -16,8 +16,16 @@
       "type": "string",
       "required": true
     },
+    "bus_schedule_id": {
+      "type": "number",
+      "required": true
+    },
     "fare": {
       "type": "float",
+      "required": true
+    },
+    "bus_stop_id": {
+      "type": "number",
       "required": true
     },
     "bus_stop": {
