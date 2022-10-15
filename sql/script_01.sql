@@ -283,12 +283,18 @@ where r.name='KUMASI-ACCRA' and bs.ghana_post_address in ('GP10','GP11','GP12','
 
 CREATE OR REPLACE view online_ticketing.v_bus_route as
 SELECT
-UUID() as 'id',
-r.id as route_id,
-bs.departure_time, r.name as route,r.fare as fare,bst.name as bus_stop,
-rbs.seq_order as bus_stop_order
-FROM online_ticketing.bus_schedule bs
-left join online_ticketing.route r on r.id=bs.route_id
-left join online_ticketing.route_bus_stop rbs on rbs.route_id=r.id
-left join online_ticketing.bus_stop bst on rbs.bus_stop_id=bst.id
-order by departure_time,bus_stop_order
+        UUID() AS `id`,
+        `r`.`id` AS `route_id`,
+         `r`.`name` AS `route`,
+        `bs`.`departure_time` AS `departure_time`,
+        `bs`.`id` AS `bus_schedule_id`,
+        `r`.`fare` AS `fare`,
+        `bst`.`name` AS `bus_stop`,
+        `bst`.`id` AS `bus_stop_id`,
+        `rbs`.`seq_order` AS `bus_stop_order`
+    FROM
+        (((`online_ticketing`.`bus_schedule` `bs`
+        LEFT JOIN `online_ticketing`.`route` `r` ON ((`r`.`id` = `bs`.`route_id`)))
+        LEFT JOIN `online_ticketing`.`route_bus_stop` `rbs` ON ((`rbs`.`route_id` = `r`.`id`)))
+        LEFT JOIN `online_ticketing`.`bus_stop` `bst` ON ((`rbs`.`bus_stop_id` = `bst`.`id`)))
+    ORDER BY `bs`.`departure_time` , `rbs`.`seq_order`;
