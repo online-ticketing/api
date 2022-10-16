@@ -45,7 +45,6 @@ module.exports = function(Booking) {
         }
         //filter by passengerId
         filter.where = {passengerId: user.id};
-        console.log(ctx.args.filter)
         ctx.args.filter = filter;
       }
     }else{
