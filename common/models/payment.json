@@ -33,7 +33,7 @@
     },
     "payment_date": {
       "type": "date",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": null,
       "scale": null,

@@ -9,6 +9,7 @@ module.exports = function(Payment) {
     const utils = require('../utils/apiUtils');
     //validate that there is an api key and that it is valid
     const user = await utils.validUser(ctx);
+    console.log(methodName);
     if (methodName === 'create') {
       ctx.req.body.passengerId = user.id;
       return;

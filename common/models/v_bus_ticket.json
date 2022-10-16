@@ -1,0 +1,86 @@
+{
+  "name": "v_bus_ticket",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "mysql": {
+      "table": "v_tickets"
+    }
+  },
+  "properties": {
+    "bus_stop": {
+      "type": "string",
+      "required": true
+    },
+    "bus_no": {
+      "type": "string",
+      "required": true
+    },
+    "departure_time": {
+      "type": "date",
+      "required": true,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "departure_time",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "fare": {
+      "type": "float",
+      "required": true
+    },
+    "serial_no": {
+      "type": "string",
+      "required": true
+    },
+    "route": {
+      "type": "string",
+      "required": true
+    },
+    "route_id": {
+      "type": "number",
+      "required": true
+    },
+    "booking_id": {
+      "type": "number",
+      "required": true
+    },
+    "user_id": {
+      "type": "number",
+      "required": true
+    },
+    "ticket_id": {
+      "type": "number",
+      "required": true
+    },
+    "purchase_date": {
+      "type": "date",
+      "required": true,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "purchase_date",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "status": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
