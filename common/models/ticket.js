@@ -11,7 +11,10 @@ module.exports = function(Ticket) {
 
     //  Ypu are a valid user, so you can create a ticket
     if (methodName === 'create') {
+      const crypto = require("crypto");
+      ctx.req.body.serial_number = crypto.randomBytes(16).toString("hex");
       ctx.req.body.passengerId = user.id;
+      ctx.req.body.seat_number = Math.floor(Math.random() * 60) + 1
       return;
     }
 

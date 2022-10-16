@@ -1,18 +1,24 @@
 'use strict';
 
 const utils = require('../utils/apiUtils');
+const crypto = require('crypto');
 module.exports = function(Booking) {
 
   Booking.beforeRemote('**', async function(ctx) {
     const methodName = ctx.method.name.toLowerCase();
     const utils = require('../utils/apiUtils');
-
     //validate that there is an api key and that it is valid
     const user = await utils.validUser(ctx);
-
     //  Ypu are a valid user, so you can create a ticket
-    if (methodName === 'create') {
+    if (methodName === "create" || methodName === "__create__payment") {
       ctx.req.body.passengerId = user.id;
+      return;
+    }
+    if ( methodName === "__create__tickets") {
+      const crypto = require("crypto");
+      ctx.req.body.serial_number = crypto.randomBytes(16).toString("hex");
+      ctx.req.body.passengerId = user.id;
+      ctx.req.body.seat_number = Math.floor(Math.random() * 60) + 1;
       return;
     }
 

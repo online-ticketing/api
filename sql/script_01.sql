@@ -298,3 +298,47 @@ SELECT
         LEFT JOIN `online_ticketing`.`route_bus_stop` `rbs` ON ((`rbs`.`route_id` = `r`.`id`)))
         LEFT JOIN `online_ticketing`.`bus_stop` `bst` ON ((`rbs`.`bus_stop_id` = `bst`.`id`)))
     ORDER BY `bs`.`departure_time` , `rbs`.`seq_order`;
+
+create or replace view online_ticketing.v_ticktes as
+SELECT
+ UUID() AS `id`,
+t.id as ticket_id,
+t.date_created as purchase_date,
+t.serial_number,
+b.status as status,
+b.number_of_seats, bs.name as origin,
+bsc.departure_time,
+r.name as route,
+u.contact_number as phone,
+u.full_name,
+u.id as user_id
+FROM online_ticketing.ticket t
+left join online_ticketing.booking b on t.booking_id=b.id
+left join online_ticketing.bus_stop bs on bs.id=b.bus_stop_id
+left join online_ticketing.bus_schedule bsc on bsc.id=b.bus_schedule_id
+left join online_ticketing.route r on r.id=bsc.route_id
+left join online_ticketing.user u on u.id=t.user_id;
+
+create or replace view online_ticketing.v_tickets as
+SELECT
+ UUID() AS `id`,
+ bs.name as bus_stop,
+ bus.bus_number as bus_no,
+ bsc.departure_time,
+ r.fare as fare,
+ t.serial_number as serial_no,
+ r.name as route,
+ r.id as route_id,
+t.id as ticket_id,
+t.date_created as purchase_date,
+t.user_id as user_id,
+b.id as booking_id,
+b.status as status
+FROM online_ticketing.ticket t
+left join online_ticketing.booking b on t.booking_id=b.id
+left join online_ticketing.bus_stop bs on bs.id=b.bus_stop_id
+left join online_ticketing.bus_schedule bsc on bsc.id=b.bus_schedule_id
+left join online_ticketing.route r on r.id=bsc.route_id
+left join  online_ticketing.bus bus on bus.id=bsc.bus_id
+left join online_ticketing.user u on u.id=t.user_id
+where b.status=1;
