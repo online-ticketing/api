@@ -43,7 +43,7 @@ module.exports = function(Recover) {
       const utils = require('../utils/apiUtils');
       const user = await Recover.app.models.User.findOne({where: {email: ctx.result.email}});
       const options = {email: ctx.result.email,otp: ctx.result.otp, full_name: user.full_name};
-      await utils.otpEmail(options);
+      ctx.result = await utils.otpEmail(options);
     }
   })
   /**
