@@ -6,6 +6,11 @@
     "database": "online_ticketing",
     "username": "vip",
     "password": "csit410_vip"
+  },
+  "mail_jet" : {
+    "user_email" : "fboakye008@st.ug.edu.gh",
+    "api_key" : "1c0489bbf5a9303653f400c7b8bb466e",
+    "api_secret" : "7aa3622b83c481ab87151960ebe0f5b0"
   }
 }
 

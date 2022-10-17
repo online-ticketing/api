@@ -342,3 +342,16 @@ left join online_ticketing.route r on r.id=bsc.route_id
 left join  online_ticketing.bus bus on bus.id=bsc.bus_id
 left join online_ticketing.user u on u.id=t.user_id
 where b.status=1;
+DROP TABLE IF EXISTS `online_ticketing`.`recoveries`;
+CREATE TABLE `online_ticketing`.`recoveries`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(45) NOT NULL,
+  `expiry` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `otp` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_r_expiry` (`expiry`)
+);
+
+create or replace view online_ticketing.v_recoveries as
+select r.* from recoveries r where expiry > date_sub(now(), interval 10 MINUTE);
+

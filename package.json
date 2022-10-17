@@ -23,6 +23,8 @@
     "loopback-connector-remote": "^3.4.1",
     "loopback-datasource-juggler": "^4.27.1",
     "mysql": "^2.18.1",
+    "node-mailjet": "^5.1.1",
+    "otp-generator": "^4.0.0",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^4.0.0",
     "underscore": "^1.13.6"

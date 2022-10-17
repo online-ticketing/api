@@ -92,5 +92,13 @@
   "v_bus_ticket": {
     "dataSource": "online_ticketing",
     "public": true
+  },
+  "recover": {
+    "dataSource": "online_ticketing",
+    "public": true
+  },
+  "v_recover": {
+    "dataSource": "online_ticketing",
+    "public": false
   }
 }

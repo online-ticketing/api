@@ -32,7 +32,8 @@
       }
     },
     "fare": {
-      "type": "float",
+      "type": "number",
+      "dataType": "float",
       "required": true
     },
     "serial_no": {

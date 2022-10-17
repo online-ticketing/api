@@ -21,7 +21,8 @@
       "required": true
     },
     "fare": {
-      "type": "float",
+      "type": "number",
+      "dataType": "float",
       "required": true
     },
     "bus_stop_id": {

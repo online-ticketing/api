@@ -1,7 +1,5 @@
 'use strict';
 
-const utils = require('../utils/apiUtils');
-const crypto = require('crypto');
 module.exports = function(Booking) {
 
   Booking.beforeRemote('**', async function(ctx) {
