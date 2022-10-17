@@ -1,0 +1,39 @@
+{
+  "name": "recover",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "mysql": {
+      "table": "recoveries"
+    }
+  },
+  "properties": {
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "otp": {
+      "type": "string",
+      "required": true
+    },
+    "expiry": {
+      "type": "date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "expiry",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

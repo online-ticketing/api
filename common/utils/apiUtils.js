@@ -1,5 +1,52 @@
+const config = require('config');
 
 const self = module.exports = {
+  /**
+   *
+   * @param otp
+   * @returns {Promise<void>}
+   */
+  otpEmail : async function(options) {
+    const Mailjet = require('node-mailjet');
+    const config = require('config');
+
+    if(config.mail_jet.no_email){//if a config flag is set we will just skip. Especially in development
+      console.log("Skipping email")
+      return {"success" : "success"};
+    }
+    const mailjet = new Mailjet({
+      apiKey: config.mail_jet.api_key,
+      apiSecret: config.mail_jet.api_secret,
+    });
+    const request = mailjet.post('send', {'version': 'v3.1'}).request({
+      Messages: [
+        {
+          From: {
+            Email: config.user_email,
+            Name: 'Frank',
+          },
+          To: [
+            {
+              Email: options.email,
+              Name: options.full_name,
+            },
+          ],
+          Subject: 'Online Ticketing Service',
+          TextPart: 'OTP request',
+          HTMLPart: "<h3>Dear " + options.full_name + ",<br/><p>You requested for a new OTP from our Mobile APP</p> <p> Your new 4 digit OTP is: " +
+            "<b>" + options.otp  + "</b></p><br/> Thanks, <br/> Online Ticketing Office" ,
+          'CustomID': 'Testing app',
+        },
+      ],
+    });
+    request.then((result) => {
+      console.log(result.body);
+      return {"success" : "success"}
+    }).catch((err) => {
+      console.log(err.statusCode);
+      return {"success" : "failed"}
+    });
+  },
   /**
    * Does this user have at least one of these roles
    * @param model
