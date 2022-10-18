@@ -40,7 +40,8 @@ module.exports = function(Recover) {
   Recover.afterRemote("**", async function (ctx, modelInstance) {
     const methodName = ctx.method.name;
     if(methodName.toLowerCase() === "create"){
-      const user = await Recover.app.models.User.findOne({where: {email: ctx.result.email}});
+      const User = Recover.app.models.user;
+      const user = await User.findOne({where: {email: ctx.result.email}});
       const options = {email: ctx.result.email,otp: ctx.result.otp, full_name: user.full_name};
       const answer = await utils.otpEmail(options);
       ctx.result = answer;
@@ -110,7 +111,7 @@ module.exports = function(Recover) {
     if(!user){
       return {"otp" : "expired"};
     }
-    await user.updateAttributes({"password": password});
+    await user.updateAttributes({password: password,account_status: 1});
     return {otp : otp, email: email };
   }
   Recover.remoteMethod('resetpassword', {
