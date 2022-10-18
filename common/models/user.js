@@ -20,12 +20,26 @@ module.exports = function(User) {
       return;
     }
     //Only admins/managers should be able to access this resource
-
+    if (methodName === "patchattributes") {
+      if (ctx.args.data) {
+        const userId = ctx.req.params.id;
+        const user = await User.findById(userId);
+        const apiKey = ctx.args.data.api_key;
+        if ((user && user.api_key === apiKey) || (utils.isAllowed(user, ['ADMIN', 'MANAGER']))) {
+          if (ctx.args.data.password) {
+           throw new Error("Password cannot be changed using this URL")
+          }
+          delete ctx.args.data.api_key;
+          return;
+        }
+      }
+    }
     return await utils.admin_authorization(ctx);
   });
   User.afterRemote('**', async function(ctx, modelInstance) {
     const methodName = ctx.method.name.toLowerCase();
     if (methodName === 'create') {
+
       let cuser = null;
       if (Array.isArray(modelInstance)) {
         cuser = ctx.result[0];
@@ -38,6 +52,20 @@ module.exports = function(User) {
       const UserRoleModel = app.models.user_role;
       const role = await RoleModel.find({where: {name: 'PASSENGER'}});
       await UserRoleModel.create({userId: user.id, roleId: role[0].id});
+      return ctx.result;
+    }
+
+    //Remove all passwords from output
+    if (Array.isArray(ctx.result)) {
+      ctx.result.forEach(function (result) {
+        if(result.__data && result.__data.password) {
+          delete result.__data.password;
+        }
+      });
+    } else {
+      if(ctx.result.__data && ctx.result.__data.password) {
+        delete ctx.result.__data.password;
+      }
     }
     return ctx.result;
   });
