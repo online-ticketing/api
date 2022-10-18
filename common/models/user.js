@@ -1,15 +1,15 @@
 'use strict';
 const bcrypt = require('bcrypt');
-const app = require('../../server/server');
-const saltRounds = 10;
+const utils = require('../utils/apiUtils');
 module.exports = function(User) {
   User.beforeRemote('**', async function(ctx) {
+
     const methodName = ctx.method.name.toLowerCase();
     if (methodName === 'create') {
-      let pwd = ctx.req.body.password;
-      if (pwd) {
-        pwd = await bcrypt.hash(pwd, saltRounds);
-        ctx.req.body.password = pwd;
+      const pwdPlain = ctx.req.body.password;
+      if (pwdPlain) {
+        const pwdEncrypt = await utils.encrypt(pwdPlain);
+        ctx.req.body.password = pwdEncrypt;
         const crypto = require('crypto');
         const api_key = crypto.randomBytes(20).toString('hex');
         ctx.req.body.api_key = api_key;
@@ -20,7 +20,7 @@ module.exports = function(User) {
       return;
     }
     //Only admins/managers should be able to access this resource
-    const utils = require('../utils/apiUtils');
+
     return await utils.admin_authorization(ctx);
   });
   User.afterRemote('**', async function(ctx, modelInstance) {
@@ -36,7 +36,7 @@ module.exports = function(User) {
       const app = require('../../server/server');
       const RoleModel = app.models.role;
       const UserRoleModel = app.models.user_role;
-      const role = await RoleModel.find({where: { name: 'PASSENGER'}});
+      const role = await RoleModel.find({where: {name: 'PASSENGER'}});
       await UserRoleModel.create({userId: user.id, roleId: role[0].id});
     }
     return ctx.result;
@@ -53,7 +53,7 @@ module.exports = function(User) {
       const users = await User.find({where: {contact_number: phone}});
       if (users && users.length === 1) {
         const user = users[0];
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await utils.comparePwd(password, user.password);
         if (!isMatch) {
           throw new Error('phone/password did not match');
         }

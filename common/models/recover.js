@@ -1,5 +1,5 @@
 'use strict';
-
+const utils = require('../utils/apiUtils');
 module.exports = function(Recover) {
   Recover.beforeRemote('**', async function(ctx) {
     const methodName = ctx.method.name.toLowerCase();
@@ -40,11 +40,12 @@ module.exports = function(Recover) {
   Recover.afterRemote("**", async function (ctx, modelInstance) {
     const methodName = ctx.method.name;
     if(methodName.toLowerCase() === "create"){
-      const utils = require('../utils/apiUtils');
       const user = await Recover.app.models.User.findOne({where: {email: ctx.result.email}});
       const options = {email: ctx.result.email,otp: ctx.result.otp, full_name: user.full_name};
-      ctx.result = await utils.otpEmail(options);
+      const answer = await utils.otpEmail(options);
+      ctx.result = answer;
     }
+    return;
   })
   /**
    *
@@ -103,16 +104,13 @@ module.exports = function(Recover) {
     if(!responseData || responseData.length === 0){
       return {"otp" : "expired"};
     }
-    //Externalize in a class of constants
-    const saltRounds = 10;
-    const bcrypt = require('bcrypt');
-    const password = await bcrypt.hash(pwd, saltRounds);
+    const password = await utils.encrypt(pwd);
     const User = Recover.app.models.user;
     const user = await User.findOne({where: {email: email}});
     if(!user){
       return {"otp" : "expired"};
     }
-    await user.updateAttributes({"password": password})
+    await user.updateAttributes({"password": password});
     return {otp : otp, email: email };
   }
   Recover.remoteMethod('resetpassword', {
