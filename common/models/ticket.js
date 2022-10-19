@@ -1,6 +1,5 @@
 'use strict';
 
-const utils = require('../utils/apiUtils');
 module.exports = function(Ticket) {
   Ticket.beforeRemote('**', async function(ctx) {
     const methodName = ctx.method.name.toLowerCase();
