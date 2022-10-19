@@ -100,5 +100,9 @@
   "v_recover": {
     "dataSource": "online_ticketing",
     "public": false
+  },
+  "v_available_seats": {
+    "dataSource": "online_ticketing",
+    "public": true
   }
 }
