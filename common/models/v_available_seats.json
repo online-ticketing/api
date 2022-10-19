@@ -1,0 +1,89 @@
+{
+  "name": "v_available_seats",
+  "plural": "v_available_seats",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "mysql": {
+      "table": "v_available_seats"
+    }
+  },
+  "properties": {
+    "plate_no": {
+      "type": "string",
+      "required": true
+    },
+    "route": {
+      "type": "string",
+      "required": true
+    },
+    "fare": {
+      "type": "number",
+      "dataType": "float",
+      "required": true
+    },
+    "bus_schedule_id" : {
+      "type": "number",
+      "doc": "Schedule Id",
+      "required": true,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "bsc_id",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "departure": {
+      "type": "date",
+      "required": true,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "departure",
+        "dataType": "timestamp",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "short_depart": {
+      "type": "string",
+      "required": true,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "short_depart",
+        "dataType": "time",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "available_seats": {
+      "type": "number",
+      "doc": "Available seats on a bus",
+      "required": true,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "available_seats",
+        "dataType": "number",
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    }
+  },
+  "scope": {
+  },
+  "validations": [],
+  "acls": [],
+  "methods": {}
+}
