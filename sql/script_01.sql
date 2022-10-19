@@ -194,48 +194,8 @@ CREATE TABLE `online_ticketing`.`recoveries`  (
   PRIMARY KEY (`id`),
   KEY `idx_r_expiry` (`expiry`)
 );
--- insert users
-INSERT INTO `online_ticketing`.`user` (`full_name`,`contact_number`,`email`,`password`,`account_status`,`api_key`)
-VALUES("Kwabena Asiedu","6174819043","jacob.asiedu@gmail.com","$2a$10$ZldWMzJiLeoUlyyFOxiiPeVmROBYsY3V7f/NXw.rIywfZDbrlP8eS",1,'xxxxxxxxx1'),
-("Frank Boakye","0245666208","boakyef213@gmail.com","$2a$10$ZldWMzJiLeoUlyyFOxiiPeVmROBYsY3V7f/NXw.rIywfZDbrlP8eS",1,'xxxxxxxxx2');
 
--- Insert Drivers, Managers and Admin
-INSERT INTO `online_ticketing`.`role` (`name`,`created_by_id`,`description`)
-VALUES("MANAGER",1,"The Manager Role"),("BOOK_MAN",1,"The Book man Role"),("DRIVER",1,"The Driver Role"),("ADMIN",1,"The System Administrative Role"),("CONDUCTOR",1,"The Conductor Role"),("PASSENGER",1,"The passenger Role");
-
-INSERT INTO `online_ticketing`.`user_role` (`user_id`,`role_id`)
-select distinct u.id as user_id, r.id as role_id
-from online_ticketing.user u cross join online_ticketing.role r
-where u.email='jacob.asiedu@gmail.com' and r.name='MANAGER';
-
-INSERT INTO `online_ticketing`.`user_role` (`user_id`,`role_id`)
-select distinct u.id as user_id, r.id as role_id
-from online_ticketing.user u cross join online_ticketing.role r
-where u.email='jacob.asiedu@gmail.com' and r.name='ADMIN';
-
-INSERT INTO `online_ticketing`.`user_role` (`user_id`,`role_id`)
-select distinct u.id as user_id, r.id as role_id
-from online_ticketing.user u cross join online_ticketing.role r
-where u.email='jacob.asiedu@gmail.com' and r.name='PASSENGER';
-
-INSERT INTO `online_ticketing`.`user_role` (`user_id`,`role_id`)
-select distinct u.id as user_id, r.id as role_id
-from online_ticketing.user u cross join online_ticketing.role r
-where u.email='boakyef213@gmail.com' and r.name='DRIVER';
-
-INSERT INTO `online_ticketing`.`user_role` (`user_id`,`role_id`)
-select distinct u.id as user_id, r.id as role_id
-from online_ticketing.user u cross join online_ticketing.role r
-where u.email='boakyef213@gmail.com' and r.name='PASSENGER';
-
-
-INSERT INTO `online_ticketing`.`user_role` (`user_id`,`role_id`)
-select distinct u.id as user_id, r.id as role_id
-from online_ticketing.user u cross join online_ticketing.role r
-where u.email='jacob.asiedu@gmail.com' and r.name='DRIVER';
-
-CREATE OR REPLACE view online_ticketing.v_bus_route as
-SELECT
+CREATE OR REPLACE view online_ticketing.v_bus_route as SELECT
         UUID() AS `id`,
         `r`.`id` AS `route_id`,
          `r`.`name` AS `route`,
@@ -252,51 +212,40 @@ SELECT
         LEFT JOIN `online_ticketing`.`bus_stop` `bst` ON ((`rbs`.`bus_stop_id` = `bst`.`id`)))
     ORDER BY `bs`.`departure_time` , `rbs`.`seq_order`;
 
-create or replace view online_ticketing.v_ticktes as
-SELECT
- UUID() AS `id`,
-t.id as ticket_id,
-t.date_created as purchase_date,
-t.serial_number,
-b.status as status,
-b.number_of_seats, bs.name as origin,
-bsc.departure_time,
-r.name as route,
-u.contact_number as phone,
-u.full_name,
-u.id as user_id
-FROM online_ticketing.ticket t
-left join online_ticketing.booking b on t.booking_id=b.id
-left join online_ticketing.bus_stop bs on bs.id=b.bus_stop_id
-left join online_ticketing.bus_schedule bsc on bsc.id=b.bus_schedule_id
-left join online_ticketing.route r on r.id=bsc.route_id
-left join online_ticketing.user u on u.id=t.user_id;
 
-create or replace view online_ticketing.v_tickets as
-SELECT
- UUID() AS `id`,
- bs.name as bus_stop,
- bus.bus_number as bus_no,
- bsc.departure_time,
- r.fare as fare,
- t.serial_number as serial_no,
- r.name as route,
- r.id as route_id,
-t.id as ticket_id,
-t.date_created as purchase_date,
-t.user_id as user_id,
-b.id as booking_id,
-b.status as status
-FROM online_ticketing.ticket t
-left join online_ticketing.booking b on t.booking_id=b.id
-left join online_ticketing.bus_stop bs on bs.id=b.bus_stop_id
-left join online_ticketing.bus_schedule bsc on bsc.id=b.bus_schedule_id
-left join online_ticketing.route r on r.id=bsc.route_id
-left join  online_ticketing.bus bus on bus.id=bsc.bus_id
-left join online_ticketing.user u on u.id=t.user_id
-where b.status=1;
+CREATE OR REPLACE VIEW online_ticketing.v_tickets AS SELECT
+        UUID() AS `id`,
+        `bs`.`name` AS `bus_stop`,
+        `bus`.`bus_number` AS `bus_no`,
+        `bsc`.`departure_time` AS `departure_time`,
+        `r`.`fare` AS `fare`,
+        `t`.`serial_number` AS `serial_no`,
+        `r`.`name` AS `route`,
+        `r`.`id` AS `route_id`,
+        `t`.`id` AS `ticket_id`,
+        `t`.`date_created` AS `purchase_date`,
+        `t`.`user_id` AS `user_id`,
+        `b`.`id` AS `booking_id`,
+        `b`.`status` AS `status`
+    FROM
+        ((((((`online_ticketing`.`ticket` `t`
+        LEFT JOIN `online_ticketing`.`booking` `b` ON ((`t`.`booking_id` = `b`.`id`)))
+        LEFT JOIN `online_ticketing`.`bus_stop` `bs` ON ((`bs`.`id` = `b`.`bus_stop_id`)))
+        LEFT JOIN `online_ticketing`.`bus_schedule` `bsc` ON ((`bsc`.`id` = `b`.`bus_schedule_id`)))
+        LEFT JOIN `online_ticketing`.`route` `r` ON ((`r`.`id` = `bsc`.`route_id`)))
+        LEFT JOIN `online_ticketing`.`bus` ON ((`bus`.`id` = `bsc`.`bus_id`)))
+        LEFT JOIN `online_ticketing`.`user` `u` ON ((`u`.`id` = `t`.`user_id`)))
+    WHERE
+        (`b`.`status` = 1);
 
 
-create or replace view online_ticketing.v_recoveries as
-select r.* from online_ticketing.recoveries r where expiry > date_sub(now(), interval 10 MINUTE);
 
+CREATE OR REPLACE VIEW online_ticketing.v_recoveries AS SELECT
+        `r`.`id` AS `id`,
+        `r`.`email` AS `email`,
+        `r`.`expiry` AS `expiry`,
+        `r`.`otp` AS `otp`
+    FROM
+        `online_ticketing`.`recoveries` `r`
+    WHERE
+        (`r`.`expiry` > (NOW() - INTERVAL 10 MINUTE));

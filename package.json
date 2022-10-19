@@ -24,6 +24,7 @@
     "mysql": "^2.18.1",
     "node-mailjet": "^5.1.1",
     "otp-generator": "^4.0.0",
+    "run-my-sql-file": "^1.0.0",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^4.0.0",
     "underscore": "^1.13.6"

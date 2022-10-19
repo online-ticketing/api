@@ -1,4 +1,3 @@
-//const fetch = require('node-fetch');
 const gps_location = {
   lat: 0,
   lng: 0,
@@ -6,12 +5,98 @@ const gps_location = {
 const app = require('./server/server');
 const _ = require('underscore');
 const moment = require('moment');
-const generateSchedules = async function(routes, buses,user_id) {
+
+
+const runSqlFile = (sql_path) => {
+  const Runner = require('run-my-sql-file');
+  const config = require('config');
+  Runner.connectionOptions({
+    host:config.db.host,
+    user:config.db.username,
+    password:config.db.password
+  });
+  return new Promise((resolve, reject) => {
+    Runner.runFile(sql_path, (err)=>{
+      if (err) return reject(err)
+      resolve()
+    })
+  })
+}
+
+const dropCreateTables = async function(){
+  const sql_path = __dirname + "/sql/script_01.sql";
+  const x = await runSqlFile(sql_path);
+  return x;
+}
+const createUserRoles = async function(users,roles){
+  const UserRoleModel = app.models.user_role;
+  const data = [];
+  const q = _.findWhere(users, {email: "jacob.asiedu@gmail.com"});
+  const f = _.findWhere(users, {email: "boakyef213@gmail.com"});
+
+  const manager =  _.findWhere(roles, {name: "MANAGER"});
+  data.push({roleId: manager.id,userId: q.id})
+
+  const admin =  _.findWhere(roles, {name: "ADMIN"});
+  data.push({roleId: admin.id,userId: q.id})
+
+  const passenger =  _.findWhere(roles, {name: "PASSENGER"});
+  data.push({roleId: passenger.id,userId: q.id});
+
+  const driver =  _.findWhere(roles, {name: "DRIVER"});
+  data.push({roleId: driver.id,userId: f.id});
+  data.push({roleId: driver.id,userId: q.id});
+  data.push({roleId: passenger.id,userId: f.id});
+  const userRole = await UserRoleModel.create(data);
+  return userRole;
+}
+const createRoles = async function(user_id) {
+  const RoleModel = app.models.role;
+  const roleString = ["MANAGER","BOOK_MAN","DRIVER","ADMIN","CONDUCTOR","PASSENGER"];
+  const data = [];
+  for(let role of roleString){
+    data.push({
+      "name": role,
+      "description": "Some description",
+      "created_by_id": user_id
+    });
+  }
+  const roles = await RoleModel.create(data);
+  return roles;
+};
+const createUsers = async function() {
+  const crypto = require('crypto');
+  const utils = require("./common/utils/apiUtils")
+  const pwdEncrypt = await utils.encrypt("Kwabenah2");
+
+  const UserModel = app.models.user;
+  const data = [
+    {
+      'full_name': 'Kwabena Asiedu',
+      'contact_number': '6174819043',
+      'email': 'jacob.asiedu@gmail.com',
+      'password': pwdEncrypt,
+      'account_status': 1,
+      api_key: crypto.randomBytes(20).toString('hex')
+    },
+    {
+      'full_name': 'Frank Boakye',
+      'contact_number': '0245666208',
+      'email': "boakyef213@gmail.com",
+      'password': pwdEncrypt,
+      'account_status': 1,
+      api_key: crypto.randomBytes(20).toString('hex')
+    }
+  ];
+  const users = await UserModel.create(data);
+  return users;
+};
+const generateSchedules = async function(routes, buses, user_id) {
   const RoleModel = app.models.role;
   const UserRoleModel = app.models.user_role;
   const driverRole = await RoleModel.findOne({where: {name: 'DRIVER'}});
   const drivers = await UserRoleModel.find({where: {roleId: driverRole.id}});
-   //there should be two drivers and two routes each driver takes a route
+  //there should be two drivers and two routes each driver takes a route
 
   const evenBuses = buses.filter((value, i) => {
     if (i % 2 === 0) {
@@ -29,15 +114,15 @@ const generateSchedules = async function(routes, buses,user_id) {
     const route = routes[index];
     const driver = drivers[index];
     if (index % 2 === 0) {
-      promises.push(generateBusSchedules(evenBuses,driver.userId,route.id,user_id));
-    }else{
-      promises.push(generateBusSchedules(oddBuses,driver.userId,route.id,user_id));
+      promises.push(generateBusSchedules(evenBuses, driver.userId, route.id, user_id));
+    } else {
+      promises.push(generateBusSchedules(oddBuses, driver.userId, route.id, user_id));
     }
   }
   await Promise.all(promises);
-  return "done";
+  return 'done';
 };
-const generateBusSchedules = async function(buses, driver_id, route_id,user_id) {
+const generateBusSchedules = async function(buses, driver_id, route_id, user_id) {
 
   const year = moment().format('YYYY');
   const month = moment().format('MM');
@@ -155,6 +240,15 @@ const fetchBusStops = function(user_id) {
     {
       'name': 'Asafo Market, Nhyiaeso, Kumasi, Ghana',
       'gps_location': gps_location,
+      'ghana_post_address': 'GP9',
+      'status': 1,
+      created_by_id: user_id,
+      seq_order: 9.,
+      r: 'ACCRA_KUMASI',
+    },
+    {
+      'name': 'Asafo Market, Nhyiaeso, Kumasi, Ghana',
+      'gps_location': gps_location,
       'ghana_post_address': 'GP10',
       'status': 1,
       created_by_id: user_id,
@@ -258,11 +352,11 @@ const generateRouteBusStop = async function(routes, bus_stops) {
     const busStops = _.where(data, {r: route.name});
     for (let busStop of busStops) {
       const foundBS = _.findWhere(bus_stops, {ghana_post_address: busStop.ghana_post_address});
-      const bus_id = foundBS.id;
+      const bus_stop_id = foundBS.id;
       const py = {
         'seq_order': busStop.seq_order,
         'routeId': route_id,
-        'busStopId': bus_id,
+        'busStopId': bus_stop_id,
       };
       payload.push(py);
     }
@@ -313,8 +407,11 @@ const generateRoutes = async function(user_id) {
 
 const runD = async function() {
   try {
-    const UserModel = app.models.user;
-    const user = await UserModel.findOne({where: {email: 'jacob.asiedu@gmail.com'}});
+    const xc = await dropCreateTables();
+    const users = await createUsers();
+    const user = _.findWhere(users,{email: 'jacob.asiedu@gmail.com'});
+    const roles = await createRoles(user.id);
+    await createUserRoles(users,roles);
     let promises = [];
     const num_buses = 28;
     promises.push(generateRoutes(user.id));
@@ -326,11 +423,10 @@ const runD = async function() {
     const busStops = responses[2];
 
     promises = [];
-    promises.push(generateSchedules(routes,buses,user.id));
+    promises.push(generateSchedules(routes, buses, user.id));
     promises.push(generateRouteBusStop(routes, busStops));
     responses = await Promise.all(promises);
-    console.log("done");
-    return "done"
+    return 'done';
   } catch (er) {
     console.error(er);
   }
@@ -343,11 +439,5 @@ p.then(function(r) {
 }).finally(function(x) {
   process.exit();
 });
-// const buses = [];
-// for (let index = 1; index <= 13; index++) {
-//   buses.push(index);
-// }
-// const p = generateBusSchedules(buses, 1, 2);
-// console.log(p);
 
 
