@@ -19,9 +19,6 @@
       "index": {"unique": true}
     },
     "email": {
-      "type": "string"
-    },
-    "username": {
       "type": "string",
       "required": true,
       "index": {"unique": true}
@@ -33,7 +30,7 @@
     "account_status": {
       "type": "number",
       "required": true,
-      "default": 1
+      "default": 0
     },
     "api_key": {
       "type": "string",

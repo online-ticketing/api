@@ -13,7 +13,7 @@
     "seq_order" : {
       "type": "number",
       "doc": "Sequential order of this route",
-      "required": true,
+      "required": false,
       "precision": 10,
       "scale": 0,
       "mysql": {

@@ -6,9 +6,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "lint": "eslint .",
-    "start": "node .",
-    "posttest": "npm run lint"
+    "start": "node ."
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -22,16 +20,13 @@
     "loopback-connector-mysql": "^6.1.0",
     "loopback-connector-remote": "^3.4.1",
     "loopback-datasource-juggler": "^4.27.1",
+    "moment": "^2.29.4",
     "mysql": "^2.18.1",
     "node-mailjet": "^5.1.1",
     "otp-generator": "^4.0.0",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^4.0.0",
     "underscore": "^1.13.6"
-  },
-  "devDependencies": {
-    "eslint": "^8.21.0",
-    "eslint-config-loopback": "^8.0.0"
   },
   "repository": {
     "type": "",
