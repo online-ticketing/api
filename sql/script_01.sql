@@ -255,7 +255,7 @@ CREATE OR REPLACE VIEW `online_ticketing`.`v_available_seats` AS SELECT
         `bus`.`plate_number` AS `plate_no`,
         `r`.`fare` AS `fare`,
         `r`.`name` AS `route`,
-        `bk`.`bus_schedule_id` AS `bs_id`,
+        `bk`.`bus_schedule_id` AS `bsc_id`,
         `bs`.`departure_time` AS `departure`,
         CAST(`bs`.`departure_time` AS TIME) AS `short_depart`,
         (`bus`.`capacity` - SUM(`bk`.`number_of_seats`)) AS `available_seats`
@@ -266,4 +266,4 @@ CREATE OR REPLACE VIEW `online_ticketing`.`v_available_seats` AS SELECT
         LEFT JOIN `online_ticketing`.`bus` ON ((`bus`.`id` = `bs`.`bus_id`)))
     WHERE
         (`bs`.`departure_time` >= NOW())
-    GROUP BY `bs_id`
+    GROUP BY `bsc_id`
