@@ -210,6 +210,7 @@ CREATE OR REPLACE view online_ticketing.v_bus_route as SELECT
         LEFT JOIN `online_ticketing`.`route` `r` ON ((`r`.`id` = `bs`.`route_id`)))
         LEFT JOIN `online_ticketing`.`route_bus_stop` `rbs` ON ((`rbs`.`route_id` = `r`.`id`)))
         LEFT JOIN `online_ticketing`.`bus_stop` `bst` ON ((`rbs`.`bus_stop_id` = `bst`.`id`)))
+        WHERE `bs`.`departure_time` >= now()
     ORDER BY `bs`.`departure_time` , `rbs`.`seq_order`;
 
 
@@ -250,20 +251,22 @@ CREATE OR REPLACE VIEW online_ticketing.v_recoveries AS SELECT
     WHERE
         (`r`.`expiry` > (NOW() - INTERVAL 10 MINUTE));
 
-CREATE OR REPLACE VIEW `online_ticketing`.`v_available_seats` AS SELECT
+create or replace view online_ticketing.v_available_seats as
+SELECT
         UUID() AS `id`,
-        `bus`.`plate_number` AS `plate_no`,
-        `r`.`fare` AS `fare`,
+       `bus`.`plate_number` AS `plate_no`,
+         `r`.`fare` AS `fare`,
         `r`.`name` AS `route`,
         `bk`.`bus_schedule_id` AS `bsc_id`,
         `bs`.`departure_time` AS `departure`,
         CAST(`bs`.`departure_time` AS TIME) AS `short_depart`,
-        (`bus`.`capacity` - SUM(`bk`.`number_of_seats`)) AS `available_seats`
+       (`bus`.`capacity`- SUM(IF(`bk`.`number_of_seats` IS NULL,0,`bk`.`number_of_seats`))) as `available_seats`
     FROM
-        (((`online_ticketing`.`booking` `bk`
-        LEFT JOIN `online_ticketing`.`bus_schedule` `bs` ON ((`bs`.`id` = `bk`.`bus_schedule_id`)))
-        LEFT JOIN `online_ticketing`.`route` `r` ON ((`r`.`id` = `bs`.`route_id`)))
-        LEFT JOIN `online_ticketing`.`bus` ON ((`bus`.`id` = `bs`.`bus_id`)))
-    WHERE
-        (`bs`.`departure_time` >= NOW())
-    GROUP BY `bsc_id`
+        `online_ticketing`.`bus_schedule` `bs`
+        LEFT JOIN  `online_ticketing`.`booking` `bk` ON `bs`.`id` = `bk`.`bus_schedule_id`
+       LEFT JOIN `online_ticketing`.`route` `r` ON `r`.`id` = `bs`.`route_id`
+        LEFT JOIN `online_ticketing`.`bus` ON `bus`.`id` = `bs`.`bus_id`
+       where
+        `bs`.`departure_time` >= NOW()
+    GROUP BY `bsc_id`,plate_no,fare,route,departure
+    order by departure;
