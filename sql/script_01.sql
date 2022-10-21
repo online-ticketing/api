@@ -251,8 +251,7 @@ CREATE OR REPLACE VIEW online_ticketing.v_recoveries AS SELECT
     WHERE
         (`r`.`expiry` > (NOW() - INTERVAL 10 MINUTE));
 
-create or replace view online_ticketing.v_available_seats as
-SELECT
+create or replace view online_ticketing.v_available_seats as SELECT
         UUID() AS `id`,
        `bus`.`plate_number` AS `plate_no`,
          `r`.`fare` AS `fare`,
