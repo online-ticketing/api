@@ -224,6 +224,7 @@ CREATE OR REPLACE VIEW online_ticketing.v_tickets AS SELECT
         `r`.`name` AS `route`,
         `r`.`id` AS `route_id`,
         `t`.`id` AS `ticket_id`,
+        `t`.`seat_number` as `seat_no`,
         `t`.`date_created` AS `purchase_date`,
         `t`.`user_id` AS `user_id`,
         `b`.`id` AS `booking_id`,

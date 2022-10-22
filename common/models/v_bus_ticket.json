@@ -16,6 +16,10 @@
       "type": "string",
       "required": true
     },
+    "seat_no": {
+      "type": "number",
+      "required": true
+    },
     "departure_time": {
       "type": "date",
       "required": true,
