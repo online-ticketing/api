@@ -21,6 +21,7 @@
     "loopback-connector-remote": "^3.4.1",
     "loopback-datasource-juggler": "^4.27.1",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.38",
     "mysql": "^2.18.1",
     "node-mailjet": "^5.1.1",
     "otp-generator": "^4.0.0",

@@ -38,15 +38,27 @@ const generateSchedules = async function(routes, buses, user_id) {
   return 'done';
 };
 const generateBusSchedules = async function(buses, driver_id, route_id, user_id) {
-
+  const moment = require('moment-timezone');
+  moment.tz.setDefault('UTC');
   const year = moment().format('YYYY');
-  const month = moment().format('MM');
-  const day = moment().format('DD');
-
-  const schedule_date = new Date(parseInt(year), (parseInt(month) - 1), parseInt(day));
+  const month = moment().subtract(1, 'month').format('MM');
+  const day = moment().add(1, 'days').format('DD');
+  const schedule_date = moment(
+    {
+      year: year,
+      month: month,
+      day: day,
+      hour: 0,
+      minute: 0,
+      second: 0,
+      millisecond: 0,
+    },
+  );
   const schedules = [];
-  for (let index = 1; index <= buses.length; index++) {
-    const bus = buses[index - 1];
+  const startIndex = 5; //set to 5 am
+  const lengthOfBuses =buses.length + startIndex;
+  for (let index = startIndex; index < lengthOfBuses; index++) {
+    const bus = buses[index - startIndex];
     const departure_time = moment(schedule_date).add((index), 'hours');
     const estimated_arrival_time = moment(departure_time).add(5, 'hours');
     const schedule = {
@@ -54,13 +66,12 @@ const generateBusSchedules = async function(buses, driver_id, route_id, user_id)
       created_by_id: user_id,
       driver_id: driver_id,
       route_id: route_id,
-      schedule_date: toISOLocal(schedule_date),
+      schedule_date: toISOLocal(departure_time.toDate()),
       departure_time: departure_time.toISOString(),
       estimated_arrival_time: estimated_arrival_time.toISOString(),
     };
     schedules.push(schedule);
   }
-
   const BusScheduleModel = app.models.bus_schedule;
   const x = await BusScheduleModel.create(schedules);
   return x;
