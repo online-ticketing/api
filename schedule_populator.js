@@ -5,6 +5,7 @@ const gps_location = {
 const app = require('./server/server');
 const _ = require('underscore');
 const moment = require('moment');
+const loopback = require('loopback');
 
 
 const runSqlFile = (sql_path) => {
@@ -167,7 +168,7 @@ const fetchBusStops = function(user_id) {
   return [
     {
       'name': 'Kwame Nkrumah Circle, Dr. Busia Hwy, Accra, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat: 5.569984006856294, lng: -0.2154947295661747},
       'ghana_post_address': 'GP1',
       'status': 1,
       created_by_id: user_id,
@@ -175,8 +176,9 @@ const fetchBusStops = function(user_id) {
       r: 'ACCRA-KUMASI',
     },
     {
+
       'name': 'Achimota Old Station Bus Stop, Accra, Ghana',
-      'gps_location': gps_location,
+      'gps_location':{lat: 5.61699215168164, lng:-0.22966864491063455},
       'ghana_post_address': 'GP2',
       'status': 1,
       created_by_id: user_id,
@@ -184,8 +186,9 @@ const fetchBusStops = function(user_id) {
       r: 'ACCRA-KUMASI',
     },
     {
+
       'name': 'China Mall Amasaman, PM8V+G82, Amasaman, Ghana',
-      'gps_location': gps_location,
+      'gps_location':  {lat: 5.715921183209992, lng:-0.30786651607441196},
       'ghana_post_address': 'GP3',
       'status': 1,
       created_by_id: user_id,
@@ -193,8 +196,9 @@ const fetchBusStops = function(user_id) {
       r: 'ACCRA-KUMASI',
     },
     {
+
       'name': 'MEDIE, QM6G+RJW, Medie, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat: 5.7623153136965986, lng:-0.32337898723823644},
       'ghana_post_address': 'GP4',
       'status': 1,
       created_by_id: user_id,
@@ -202,8 +206,9 @@ const fetchBusStops = function(user_id) {
       r: 'ACCRA-KUMASI',
     },
     {
+
       'name': 'Teye Lawer Ent., RJ9W+MCR, Nsawam Road, Nsawam, Ghana',
-      'gps_location': gps_location,
+      'gps_location':{lat: 5.819493687316645, lng:-0.35392898723819066},
       'ghana_post_address': 'GP5',
       'status': 1,
       created_by_id: user_id,
@@ -211,8 +216,9 @@ const fetchBusStops = function(user_id) {
       r: 'ACCRA-KUMASI',
     },
     {
+
       'name': 'MCANIM SERVICE STATION, Nsawam - Suhum Rd, Teacher Mante, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat: 5.9001940957840775, lng:-0.3878769449103359},
       'ghana_post_address': 'GP6',
       'status': 1,
       created_by_id: user_id,
@@ -220,8 +226,9 @@ const fetchBusStops = function(user_id) {
       r: 'ACCRA-KUMASI',
     },
     {
+
       'name': 'Asuboi Health centre,Asuboe, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat: 5.951237642096986, lng:-0.4151194737464036},
       'ghana_post_address': 'GP7',
       'status': 1,
       created_by_id: user_id,
@@ -229,8 +236,9 @@ const fetchBusStops = function(user_id) {
       r: 'ACCRA-KUMASI',
     },
     {
+
       'name': 'Sankofa filling Station,Amanase, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat: 6.000109377161529, lng:-0.4324451449102176},
       'ghana_post_address': 'GP8',
       'status': 1,
       created_by_id: user_id,
@@ -238,8 +246,9 @@ const fetchBusStops = function(user_id) {
       r: 'ACCRA-KUMASI',
     },
     {
+
       'name': 'Asafo Market, Nhyiaeso, Kumasi, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat: 6.673774886386574, lng:-1.6165512449092443},
       'ghana_post_address': 'GP9',
       'status': 1,
       created_by_id: user_id,
@@ -247,8 +256,9 @@ const fetchBusStops = function(user_id) {
       r: 'ACCRA_KUMASI',
     },
     {
+
       'name': 'Asafo Market, Nhyiaeso, Kumasi, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat: 6.673774886386574, lng:-1.6165512449092443},
       'ghana_post_address': 'GP10',
       'status': 1,
       created_by_id: user_id,
@@ -256,8 +266,9 @@ const fetchBusStops = function(user_id) {
       r: 'KUMASI-ACCRA',
     },
     {
+
       'name': 'Hotel Georgia, Ahodwo Round About, Southern By-Pass, Kumasi, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat: 6.669632288462265, lng:-1.6153895025815086},
       'ghana_post_address': 'GP11',
       'status': 1,
       created_by_id: user_id,
@@ -265,8 +276,9 @@ const fetchBusStops = function(user_id) {
       r: 'KUMASI-ACCRA',
     },
     {
+
       'name': 'Kumasi City Mall, Lake Rd, Kumasi, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat:6.671567543682903, lng:-1.6070654449092332},
       'ghana_post_address': 'GP12',
       'status': 1,
       seq_order: 3,
@@ -274,8 +286,9 @@ const fetchBusStops = function(user_id) {
       r: 'KUMASI-ACCRA',
     },
     {
+
       'name': 'Tech Junction overpass bridge, MCPG+PFG, Ejisu Road, Kumasi, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat:6.687013800478961, lng:-1.5738236890898323},
       'ghana_post_address': 'GP13',
       'status': 1,
       seq_order: 4,
@@ -283,8 +296,9 @@ const fetchBusStops = function(user_id) {
       r: 'KUMASI-ACCRA',
     },
     {
+
       'name': 'Kindle Organic, Ejisu Kwamu main road, beside Kwamu Chief\'s Palace Digital Address: AE-0197-3789, Kumasi, Ghana',
-      'gps_location': gps_location,
+      'gps_location':  {lat:6.716302620216888, lng:-1.5030155872369322},
       'ghana_post_address': 'GP14',
       'status': 1,
       created_by_id: user_id,
@@ -292,8 +306,9 @@ const fetchBusStops = function(user_id) {
       r: 'KUMASI-ACCRA',
     },
     {
+
       'name': 'Anita Hotel, Kumasi, Konongo - Ejisu Rd, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat:6.725698305253024, lng:-1.459199616073042},
       'ghana_post_address': 'GP15',
       'status': 1,
       created_by_id: user_id,
@@ -302,7 +317,7 @@ const fetchBusStops = function(user_id) {
     },
     {
       'name': 'Pacific filling station, MJ7P+W9, Kubease, Ghana',
-      'gps_location': gps_location,
+      'gps_location':  {lat:6.6650577907529165, lng:-1.363961629564786},
       'ghana_post_address': 'GP16',
       'status': 1,
       created_by_id: user_id,
@@ -311,7 +326,7 @@ const fetchBusStops = function(user_id) {
     },
     {
       'name': 'Konongo Market, Konongo, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat:  6.623960954040001,lng: -1.2113609872370985},
       'ghana_post_address': 'GP17',
       'status': 1,
       created_by_id: user_id,
@@ -320,7 +335,7 @@ const fetchBusStops = function(user_id) {
     },
     {
       'name': 'JULAN HOTEL, HVRM+PCW, Atwedie Road, Juaso, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat: 6.592116527066808, lng: -1.1163967737455047},
       'ghana_post_address': 'GP18',
       'status': 1,
       created_by_id: user_id,
@@ -329,7 +344,7 @@ const fetchBusStops = function(user_id) {
     },
     {
       'name': 'Kwame Nkrumah Circle, Dr. Busia Hwy, Accra, Ghana',
-      'gps_location': gps_location,
+      'gps_location': {lat: 5.569984006856294, lng: -0.2154947295661747},
       'ghana_post_address': 'GP19',
       'status': 1,
       created_by_id: user_id,

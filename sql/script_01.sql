@@ -270,3 +270,14 @@ create or replace view online_ticketing.v_available_seats as SELECT
         `bs`.`departure_time` >= NOW()
     GROUP BY `bsc_id`,plate_no,fare,route,departure
     order by departure;
+
+CREATE OR REPLACE VIEW online_ticketing.v_bus_stop_2_route as SELECT
+    UUID() AS `id`,
+    r.id as route_id,
+    r.name as route_name,
+    bs.gps_location as gps_location,
+    bs.name as bus_stop,
+    rbs.seq_order
+  FROM online_ticketing.route r left join online_ticketing.route_bus_stop rbs
+    on r.id=rbs.route_id left join online_ticketing.bus_stop bs on bs.id=rbs.bus_stop_id
+  order by rbs.seq_order asc;

@@ -36,11 +36,6 @@
     "dataSource": "db",
     "public": false
   },
-
-  "user": {
-    "dataSource": "online_ticketing",
-    "public": true
-  },
   "booking": {
     "dataSource": "online_ticketing",
     "public": true
@@ -61,11 +56,21 @@
     "dataSource": "online_ticketing",
     "public": true
   },
-  "role": {
+  "recover": {
     "dataSource": "online_ticketing",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "create": true,
+          "verifyemail": true,
+          "resetpassword": true
+        }
+      }
+    }
   },
-  "route": {
+  "role": {
     "dataSource": "online_ticketing",
     "public": true
   },
@@ -73,36 +78,84 @@
     "dataSource": "online_ticketing",
     "public": false
   },
+  "route": {
+    "dataSource": "online_ticketing",
+    "public": true
+  },
   "ticket": {
     "dataSource": "online_ticketing",
     "public": true
   },
   "user": {
     "dataSource": "online_ticketing",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "create": true,
+          "login": true,
+          "patchAttributes": true
+        }
+      }
+    }
   },
   "user_role": {
     "dataSource": "online_ticketing",
     "public": false
   },
+  "v_available_seats": {
+    "dataSource": "online_ticketing",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "find": true,
+          "findById": true
+        }
+      }
+    }
+  },
+  "v_bus_stop_2_route": {
+    "dataSource": "online_ticketing",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "findByRouteId": true
+        }
+      }
+    }
+  },
   "v_bus_route": {
     "dataSource": "online_ticketing",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "find": true
+        }
+      }
+    }
   },
   "v_bus_ticket": {
     "dataSource": "online_ticketing",
-    "public": true
-  },
-  "recover": {
-    "dataSource": "online_ticketing",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "find": true,
+          "findByBookingId": true
+        }
+      }
+    }
   },
   "v_recover": {
     "dataSource": "online_ticketing",
     "public": false
-  },
-  "v_available_seats": {
-    "dataSource": "online_ticketing",
-    "public": true
   }
 }

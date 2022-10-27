@@ -1,0 +1,40 @@
+{
+  "name": "v_bus_stop_2_route",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "mysql": {
+      "table": "v_bus_stop_2_route"
+    }
+  },
+  "properties": {
+    "route_id": {
+      "type": "number",
+      "required": true
+    },
+    "gps_location": {
+      "type": "GeoPoint",
+      "required": true,
+      "description": "GPS location of this bus stop"
+    },
+    "route_name": {
+      "type": "string",
+      "required": true,
+      "description": "The name of this route"
+    },
+    "bus_stop": {
+      "type": "string",
+      "required": true,
+      "description": "The name of this bus stop"
+    },
+    "seq_order": {
+      "type": "number",
+      "required": true,
+      "description": "Order of bus stop on the route"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
