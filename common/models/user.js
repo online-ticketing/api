@@ -91,7 +91,8 @@ module.exports = function(User) {
           api_key: user.api_key,
           email: user.email,
           date_created: user.date_created,
-          last_modified: user.last_modified
+          last_modified: user.last_modified,
+          apiKey: user.api_key
         };
       } else {
         throw new Error('phone/password did not match');
