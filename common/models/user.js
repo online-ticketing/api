@@ -152,6 +152,12 @@ module.exports = function(User) {
     if(!responseData || responseData.length === 0){
       return {"otp" : "expired"};
     }
+
+    const user = await User.findOne({where: {email: email}});
+    if(!user){
+      return {"otp" : "expired"};
+    }
+    await user.updateAttributes({account_status: 1});
     return {otp : otp, email: email };
   };
   User.remoteMethod('authenticateOTP', {
