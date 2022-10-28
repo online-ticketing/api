@@ -95,6 +95,7 @@
           "*": false,
           "create": true,
           "login": true,
+          "authenticateOTP": true,
           "patchAttributes": true
         }
       }

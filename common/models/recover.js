@@ -51,8 +51,8 @@ module.exports = function(Recover) {
   /**
    *
    * @param data
-   * @param options
    * @returns {Promise<{otp: string}>}
+   *
    */
   Recover.verifyemail = async function (data) {
     const email = data.email;

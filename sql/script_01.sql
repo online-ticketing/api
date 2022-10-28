@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `online_ticketing`.`user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `full_name` varchar(50) NOT NULL,
   `contact_number` varchar(10) NOT NULL,
-  `email` varchar(30) DEFAULT NULL,
+  `email` varchar(30) NOT NULL,
   `password` varchar(100) NOT NULL,
   `api_key` VARCHAR(45) NOT NULL,
   `account_status` int NOT NULL DEFAULT '0',

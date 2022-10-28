@@ -1,6 +1,8 @@
 'use strict';
 const bcrypt = require('bcrypt');
 const utils = require('../utils/apiUtils');
+const app = require('../../server/server');
+const otpGenerator = require('otp-generator');
 module.exports = function(User) {
   User.beforeRemote('**', async function(ctx) {
 
@@ -13,10 +15,11 @@ module.exports = function(User) {
         const crypto = require('crypto');
         const api_key = crypto.randomBytes(20).toString('hex');
         ctx.req.body.api_key = api_key;
+        ctx.req.body.account_status = 0;
       }
       return;
     }
-    if (methodName === 'login') {
+    if (methodName === 'login' || methodName === 'authenticateotp') {
       return;
     }
     //Only admins/managers should be able to access this resource
@@ -52,7 +55,15 @@ module.exports = function(User) {
       const UserRoleModel = app.models.user_role;
       const role = await RoleModel.find({where: {name: 'PASSENGER'}});
       await UserRoleModel.create({userId: user.id, roleId: role[0].id});
-      return ctx.result;
+      const RecoverModel = app.models.recover;
+      const otpGenerator = require('otp-generator')
+      const otp = otpGenerator.generate(4, { lowerCaseAlphabets: false,upperCaseAlphabets: false, specialChars: false });
+      const options = {email: user.email,otp: otp};
+      await RecoverModel.create(options);
+      options.full_name = user.full_name;
+      //create OTP and send OTP
+      const answer = await utils.otpEmail(options);
+      return  ctx.result = answer;
     }
 
     //Remove all passwords from output
@@ -78,9 +89,12 @@ module.exports = function(User) {
     try {
       const phone = data.contact_number;
       const password = data.password;
-      const users = await User.find({where: {contact_number: phone}});
-      if (users && users.length === 1) {
-        const user = users[0];
+      const user = await User.findOne({where: {contact_number: phone}});
+      if (user) {
+        if(user.status === 0){
+          throw new Error('Account is inactive. Activate account');
+        }
+
         const isMatch = await utils.comparePwd(password, user.password);
         if (!isMatch) {
           throw new Error('phone/password did not match');
@@ -120,5 +134,44 @@ module.exports = function(User) {
     returns: {
       root: true, 'type': 'object',
     },
+  });
+  /**
+   *
+   * @param data
+   * @returns {Promise<{otp: string}>}
+   *
+   */
+  User.authenticateOTP = async function (data) {
+    const email = data.email;
+    const otp = data.otp;
+
+    const VRecover = User.app.models.v_recover;
+    const whereClause = {where: {and: [{email: email}, {otp:otp}]}};
+
+    const responseData = await VRecover.find(whereClause);
+    if(!responseData || responseData.length === 0){
+      return {"otp" : "expired"};
+    }
+    return {otp : otp, email: email };
+  };
+  User.remoteMethod('authenticateOTP', {
+    http: {
+      path: '/authenticateOTP',
+      verb: 'post'
+    },
+    accepts: [{
+      arg: 'data',
+      description: "JSON data to verify email",
+      type: 'object',
+      http: {
+        source: 'body'
+      },
+      required: true
+    }],
+    description: 'Authenticate the OTP sent by user',
+    returns: {
+      "type": "user",
+      "root": true
+    }
   });
 };

@@ -4,7 +4,6 @@ const utils = require('../utils/apiUtils');
 module.exports = function(Route) {
   Route.beforeRemote('**', async function(ctx) {
     const methodName = ctx.method.name.toLowerCase();
-    console.log("methodName",methodName)
     const utils = require('../utils/apiUtils');
     const user = await utils.validUser(ctx);
     //You can only see your own payments
