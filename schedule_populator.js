@@ -12,54 +12,54 @@ const runSqlFile = (sql_path) => {
   const Runner = require('run-my-sql-file');
   const config = require('config');
   Runner.connectionOptions({
-    host:config.db.host,
-    user:config.db.username,
-    password:config.db.password
+    host: config.db.host,
+    user: config.db.username,
+    password: config.db.password,
   });
   return new Promise((resolve, reject) => {
-    Runner.runFile(sql_path, (err)=>{
-      if (err) return reject(err)
-      resolve()
-    })
-  })
-}
+    Runner.runFile(sql_path, (err) => {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
+};
 
-const dropCreateTables = async function(){
-  const sql_path = __dirname + "/sql/script_01.sql";
+const dropCreateTables = async function() {
+  const sql_path = __dirname + '/sql/script_01.sql';
   const x = await runSqlFile(sql_path);
   return x;
-}
-const createUserRoles = async function(users,roles){
+};
+const createUserRoles = async function(users, roles) {
   const UserRoleModel = app.models.user_role;
   const data = [];
-  const q = _.findWhere(users, {email: "jacob.asiedu@gmail.com"});
-  const f = _.findWhere(users, {email: "boakyef213@gmail.com"});
+  const q = _.findWhere(users, {email: 'jacob.asiedu@gmail.com'});
+  const f = _.findWhere(users, {email: 'boakyef213@gmail.com'});
 
-  const manager =  _.findWhere(roles, {name: "MANAGER"});
-  data.push({roleId: manager.id,userId: q.id})
+  const manager = _.findWhere(roles, {name: 'MANAGER'});
+  data.push({roleId: manager.id, userId: q.id});
 
-  const admin =  _.findWhere(roles, {name: "ADMIN"});
-  data.push({roleId: admin.id,userId: q.id})
+  const admin = _.findWhere(roles, {name: 'ADMIN'});
+  data.push({roleId: admin.id, userId: q.id});
 
-  const passenger =  _.findWhere(roles, {name: "PASSENGER"});
-  data.push({roleId: passenger.id,userId: q.id});
+  const passenger = _.findWhere(roles, {name: 'PASSENGER'});
+  data.push({roleId: passenger.id, userId: q.id});
 
-  const driver =  _.findWhere(roles, {name: "DRIVER"});
-  data.push({roleId: driver.id,userId: f.id});
-  data.push({roleId: driver.id,userId: q.id});
-  data.push({roleId: passenger.id,userId: f.id});
+  const driver = _.findWhere(roles, {name: 'DRIVER'});
+  data.push({roleId: driver.id, userId: f.id});
+  data.push({roleId: driver.id, userId: q.id});
+  data.push({roleId: passenger.id, userId: f.id});
   const userRole = await UserRoleModel.create(data);
   return userRole;
-}
+};
 const createRoles = async function(user_id) {
   const RoleModel = app.models.role;
-  const roleString = ["MANAGER","BOOK_MAN","DRIVER","ADMIN","CONDUCTOR","PASSENGER"];
+  const roleString = ['MANAGER', 'BOOK_MAN', 'DRIVER', 'ADMIN', 'CONDUCTOR', 'PASSENGER'];
   const data = [];
-  for(let role of roleString){
+  for (let role of roleString) {
     data.push({
-      "name": role,
-      "description": "Some description",
-      "created_by_id": user_id
+      'name': role,
+      'description': 'Some description',
+      'created_by_id': user_id,
     });
   }
   const roles = await RoleModel.create(data);
@@ -67,8 +67,8 @@ const createRoles = async function(user_id) {
 };
 const createUsers = async function() {
   const crypto = require('crypto');
-  const utils = require("./common/utils/apiUtils")
-  const pwdEncrypt = await utils.encrypt("Kwabenah2");
+  const utils = require('./common/utils/apiUtils');
+  const pwdEncrypt = await utils.encrypt('Kwabenah2');
 
   const UserModel = app.models.user;
   const data = [
@@ -78,16 +78,16 @@ const createUsers = async function() {
       'email': 'jacob.asiedu@gmail.com',
       'password': pwdEncrypt,
       'account_status': 1,
-      api_key: crypto.randomBytes(20).toString('hex')
+      api_key: crypto.randomBytes(20).toString('hex'),
     },
     {
       'full_name': 'Frank Boakye',
       'contact_number': '0245666208',
-      'email': "boakyef213@gmail.com",
+      'email': 'boakyef213@gmail.com',
       'password': pwdEncrypt,
       'account_status': 1,
-      api_key: crypto.randomBytes(20).toString('hex')
-    }
+      api_key: crypto.randomBytes(20).toString('hex'),
+    },
   ];
   const users = await UserModel.create(data);
   return users;
@@ -178,7 +178,7 @@ const fetchBusStops = function(user_id) {
     {
 
       'name': 'Achimota Old Station Bus Stop, Accra, Ghana',
-      'gps_location':{lat: 5.61699215168164, lng:-0.22966864491063455},
+      'gps_location': {lat: 5.61699215168164, lng: -0.22966864491063455},
       'ghana_post_address': 'GP2',
       'status': 1,
       created_by_id: user_id,
@@ -188,7 +188,7 @@ const fetchBusStops = function(user_id) {
     {
 
       'name': 'China Mall Amasaman, PM8V+G82, Amasaman, Ghana',
-      'gps_location':  {lat: 5.715921183209992, lng:-0.30786651607441196},
+      'gps_location': {lat: 5.715921183209992, lng: -0.30786651607441196},
       'ghana_post_address': 'GP3',
       'status': 1,
       created_by_id: user_id,
@@ -198,7 +198,7 @@ const fetchBusStops = function(user_id) {
     {
 
       'name': 'MEDIE, QM6G+RJW, Medie, Ghana',
-      'gps_location': {lat: 5.7623153136965986, lng:-0.32337898723823644},
+      'gps_location': {lat: 5.7623153136965986, lng: -0.32337898723823644},
       'ghana_post_address': 'GP4',
       'status': 1,
       created_by_id: user_id,
@@ -208,7 +208,7 @@ const fetchBusStops = function(user_id) {
     {
 
       'name': 'Teye Lawer Ent., RJ9W+MCR, Nsawam Road, Nsawam, Ghana',
-      'gps_location':{lat: 5.819493687316645, lng:-0.35392898723819066},
+      'gps_location': {lat: 5.819493687316645, lng: -0.35392898723819066},
       'ghana_post_address': 'GP5',
       'status': 1,
       created_by_id: user_id,
@@ -218,7 +218,7 @@ const fetchBusStops = function(user_id) {
     {
 
       'name': 'MCANIM SERVICE STATION, Nsawam - Suhum Rd, Teacher Mante, Ghana',
-      'gps_location': {lat: 5.9001940957840775, lng:-0.3878769449103359},
+      'gps_location': {lat: 5.9001940957840775, lng: -0.3878769449103359},
       'ghana_post_address': 'GP6',
       'status': 1,
       created_by_id: user_id,
@@ -228,7 +228,7 @@ const fetchBusStops = function(user_id) {
     {
 
       'name': 'Asuboi Health centre,Asuboe, Ghana',
-      'gps_location': {lat: 5.951237642096986, lng:-0.4151194737464036},
+      'gps_location': {lat: 5.951237642096986, lng: -0.4151194737464036},
       'ghana_post_address': 'GP7',
       'status': 1,
       created_by_id: user_id,
@@ -238,7 +238,7 @@ const fetchBusStops = function(user_id) {
     {
 
       'name': 'Sankofa filling Station,Amanase, Ghana',
-      'gps_location': {lat: 6.000109377161529, lng:-0.4324451449102176},
+      'gps_location': {lat: 6.000109377161529, lng: -0.4324451449102176},
       'ghana_post_address': 'GP8',
       'status': 1,
       created_by_id: user_id,
@@ -246,19 +246,18 @@ const fetchBusStops = function(user_id) {
       r: 'ACCRA-KUMASI',
     },
     {
-
-      'name': 'Asafo Market, Nhyiaeso, Kumasi, Ghana',
-      'gps_location': {lat: 6.673774886386574, lng:-1.6165512449092443},
-      'ghana_post_address': 'GP9',
-      'status': 1,
+      name: 'Asafo Market, Nhyiaeso, Kumasi, Ghana',
+      gps_location: {lat: 6.673774886386574, lng: -1.6165512449092443},
+      ghana_post_address: 'GP9',
+      status: 1,
       created_by_id: user_id,
       seq_order: 9.,
-      r: 'ACCRA_KUMASI',
+      r: 'ACCRA-KUMASI',
     },
     {
 
       'name': 'Asafo Market, Nhyiaeso, Kumasi, Ghana',
-      'gps_location': {lat: 6.673774886386574, lng:-1.6165512449092443},
+      'gps_location': {lat: 6.673774886386574, lng: -1.6165512449092443},
       'ghana_post_address': 'GP10',
       'status': 1,
       created_by_id: user_id,
@@ -268,7 +267,7 @@ const fetchBusStops = function(user_id) {
     {
 
       'name': 'Hotel Georgia, Ahodwo Round About, Southern By-Pass, Kumasi, Ghana',
-      'gps_location': {lat: 6.669632288462265, lng:-1.6153895025815086},
+      'gps_location': {lat: 6.669632288462265, lng: -1.6153895025815086},
       'ghana_post_address': 'GP11',
       'status': 1,
       created_by_id: user_id,
@@ -278,7 +277,7 @@ const fetchBusStops = function(user_id) {
     {
 
       'name': 'Kumasi City Mall, Lake Rd, Kumasi, Ghana',
-      'gps_location': {lat:6.671567543682903, lng:-1.6070654449092332},
+      'gps_location': {lat: 6.671567543682903, lng: -1.6070654449092332},
       'ghana_post_address': 'GP12',
       'status': 1,
       seq_order: 3,
@@ -288,7 +287,7 @@ const fetchBusStops = function(user_id) {
     {
 
       'name': 'Tech Junction overpass bridge, MCPG+PFG, Ejisu Road, Kumasi, Ghana',
-      'gps_location': {lat:6.687013800478961, lng:-1.5738236890898323},
+      'gps_location': {lat: 6.687013800478961, lng: -1.5738236890898323},
       'ghana_post_address': 'GP13',
       'status': 1,
       seq_order: 4,
@@ -298,7 +297,7 @@ const fetchBusStops = function(user_id) {
     {
 
       'name': 'Kindle Organic, Ejisu Kwamu main road, beside Kwamu Chief\'s Palace Digital Address: AE-0197-3789, Kumasi, Ghana',
-      'gps_location':  {lat:6.716302620216888, lng:-1.5030155872369322},
+      'gps_location': {lat: 6.716302620216888, lng: -1.5030155872369322},
       'ghana_post_address': 'GP14',
       'status': 1,
       created_by_id: user_id,
@@ -306,9 +305,8 @@ const fetchBusStops = function(user_id) {
       r: 'KUMASI-ACCRA',
     },
     {
-
       'name': 'Anita Hotel, Kumasi, Konongo - Ejisu Rd, Ghana',
-      'gps_location': {lat:6.725698305253024, lng:-1.459199616073042},
+      'gps_location': {lat: 6.725698305253024, lng: -1.459199616073042},
       'ghana_post_address': 'GP15',
       'status': 1,
       created_by_id: user_id,
@@ -317,7 +315,7 @@ const fetchBusStops = function(user_id) {
     },
     {
       'name': 'Pacific filling station, MJ7P+W9, Kubease, Ghana',
-      'gps_location':  {lat:6.6650577907529165, lng:-1.363961629564786},
+      'gps_location': {lat: 6.6650577907529165, lng: -1.363961629564786},
       'ghana_post_address': 'GP16',
       'status': 1,
       created_by_id: user_id,
@@ -326,7 +324,7 @@ const fetchBusStops = function(user_id) {
     },
     {
       'name': 'Konongo Market, Konongo, Ghana',
-      'gps_location': {lat:  6.623960954040001,lng: -1.2113609872370985},
+      'gps_location': {lat: 6.623960954040001, lng: -1.2113609872370985},
       'ghana_post_address': 'GP17',
       'status': 1,
       created_by_id: user_id,
@@ -361,10 +359,12 @@ const generateBusStops = async function(user_id) {
 };
 const generateRouteBusStop = async function(routes, bus_stops) {
   const data = fetchBusStops('foo');
+  console.log(data);
   const payload = [];
   for (let route of routes) {
     const route_id = route.id;
     const busStops = _.where(data, {r: route.name});
+
     for (let busStop of busStops) {
       const foundBS = _.findWhere(bus_stops, {ghana_post_address: busStop.ghana_post_address});
       const bus_stop_id = foundBS.id;
@@ -424,9 +424,9 @@ const runD = async function() {
   try {
     const xc = await dropCreateTables();
     const users = await createUsers();
-    const user = _.findWhere(users,{email: 'jacob.asiedu@gmail.com'});
+    const user = _.findWhere(users, {email: 'jacob.asiedu@gmail.com'});
     const roles = await createRoles(user.id);
-    await createUserRoles(users,roles);
+    await createUserRoles(users, roles);
     let promises = [];
     const num_buses = 28;
     promises.push(generateRoutes(user.id));
