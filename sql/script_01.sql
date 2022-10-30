@@ -259,7 +259,7 @@ create or replace view online_ticketing.v_available_seats as SELECT
         `r`.`name` AS `route`,
         `bk`.`bus_schedule_id` AS `bsc_id`,
         `bs`.`departure_time` AS `departure`,
-        CAST(`bs`.`departure_time` AS TIME) AS `short_depart`,
+         DATE_FORMAT(`bs`.`departure_time`, '%H:%i') AS `short_depart`,
        (`bus`.`capacity`- SUM(IF(`bk`.`number_of_seats` IS NULL,0,`bk`.`number_of_seats`))) as `available_seats`
     FROM
         `online_ticketing`.`bus_schedule` `bs`
