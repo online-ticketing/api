@@ -1,0 +1,22 @@
+{
+  "db": {
+    "name": "online_ticketing",
+    "host": "URL_TO_DATABASE",
+    "port": 3306,
+    "database": "online_ticketing",
+    "username": "DATABASE_USER_NAME",
+    "password": "DATABASE_PASSWORD"
+  },
+  "mail_jet" : {
+    "user_email" : "MAIL_JET_USER_EMAIL",
+    "api_key" : "MAIL_JET_API_KEY",
+    "api_secret" : "MAIL_JET_API_SECRET"
+  }
+}
+
+
+
+
+
+
+
